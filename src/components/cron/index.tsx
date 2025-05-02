@@ -28,7 +28,7 @@ const getTabTitle = (
     | ReactElement<unknown, string | JSXElementConstructor<any>>
     | Iterable<ReactNode>
     | null
-    | undefined
+    | undefined,
 ): ReactNode => <div style={{ width: 50, textAlign: 'center' }}>{text}</div>
 
 // 组件函数
@@ -227,7 +227,6 @@ function Cron(props: ICronProps) {
             onClick={async () => {
               try {
                 await navigator.clipboard.writeText(getCronExpression())
-                message.success('已复制到剪贴板')
               } catch (err) {
                 message.error('复制失败，请手动复制')
               }
