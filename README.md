@@ -1,4 +1,3 @@
 # xxl-job-webpanel-r3
 
-xxl-job webpanel React 3rd-party.
-
+xxl-job web panel React 3rd-party.

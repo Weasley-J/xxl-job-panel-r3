@@ -1,34 +1,41 @@
-import {useState} from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import '@/App.css'
+
+import { ThemeProvider } from '@/components/ui/theme-provider'
+import { BrowserRouter } from 'react-router-dom'
+import AppRoutes from '@/routes'
+import { Toaster } from 'sonner'
+import { isDebugEnable, log } from '@/common/Logger.ts'
+import { Environment } from '@/types/enum.ts'
+import { App as AntdApp, ConfigProvider } from 'antd'
+import useZustandStore from '@/stores/useZustandStore.ts'
+import AntdGlobalProvider from '@/common/AntdGlobalProvider.ts'
+import { antdTheme } from '@/config/theme.ts'
+import zhCN from 'antd/lib/locale/zh_CN'
+import enUS from 'antd/lib/locale/en_US'
+import 'dayjs/locale/zh-cn'
+import dayjs from 'dayjs'
+
+if (Environment.isLocaleCN()) dayjs.locale('zh-cn')
+if (isDebugEnable) log.debug(`Debug enabled on '${Environment.current}' mode.`)
 
 function App() {
-  const [count, setCount] = useState(0)
+  const isDarkEnable = useZustandStore(state => state.isDarkEnable)
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <ThemeProvider defaultTheme={isDarkEnable ? 'dark' : 'light'} storageKey="vite-ui-theme">
+      <Toaster />
+      <BrowserRouter>
+        {/* 尽可能减少 Antd 覆盖范围 */}
+        <ConfigProvider theme={antdTheme} locale={Environment.isLocaleCN() ? zhCN : enUS}>
+          <AntdApp>
+            <AntdGlobalProvider />
+            <div className="antd-wrapper">
+              <AppRoutes />
+            </div>
+          </AntdApp>
+        </ConfigProvider>
+      </BrowserRouter>
+    </ThemeProvider>
   )
 }
 
