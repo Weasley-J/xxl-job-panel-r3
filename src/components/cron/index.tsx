@@ -9,7 +9,7 @@ import MonthPane from './MonthPane'
 import SecondPane from './SecondPane'
 import WeekPane from './WeekPane'
 import YearPane from './YearPane'
-import { ICronProps } from '@/components/cron/index-conf' // 导入类型定义接口
+import { ICronProps } from './index-conf' // 导入类型定义接口
 
 // 设置 Tab 样式
 const tabPaneStyle = {
