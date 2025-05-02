@@ -1,7 +1,7 @@
-import { Radio } from 'antd'
-import InputFromInterval from './InputFromInterval'
-import InputFromTo from './InputFromTo'
-import InputSpecified from './InputSpecified'
+import { Radio, RadioChangeEvent } from 'antd'
+import IntervalInput from './IntervalInput.tsx'
+import FromToInput from './FromToInput.tsx'
+import SpecifiedInput from './SpecifiedInput.tsx'
 
 const radioStyle = { display: 'block', lineHeight: '32px' }
 
@@ -20,7 +20,7 @@ function DayPane(props: any) {
     currentRadio = 4
   }
 
-  const onChangeRadio = (e: { target: { value: any } }) => {
+  const onChangeRadio = (e: RadioChangeEvent) => {
     const valueType = e.target.value
     const defaultValues = ['*', '?', '1-1', '1/1', '1']
     onChange(defaultValues[valueType])
@@ -28,20 +28,22 @@ function DayPane(props: any) {
 
   return (
     <Radio.Group style={{ width: '100%' }} value={currentRadio} onChange={onChangeRadio}>
-      <Radio style={radioStyle} value={0}>
-        每一日
-      </Radio>
-      <Radio style={radioStyle} value={1}>
-        不指定
-      </Radio>
+      <div style={{ display: 'flex', gap: '24px' }}>
+        <Radio style={radioStyle} value={0}>
+          每一日
+        </Radio>
+        <Radio style={radioStyle} value={1}>
+          不指定日
+        </Radio>
+      </div>
       <Radio style={radioStyle} value={2}>
-        <InputFromTo disabled={currentRadio !== 2} value={value} onChange={onChange} />
+        <FromToInput disabled={currentRadio !== 2} value={value} onChange={onChange} />
       </Radio>
       <Radio style={radioStyle} value={3}>
-        <InputFromInterval disabled={currentRadio !== 3} value={value} onChange={onChange} />
+        <IntervalInput disabled={currentRadio !== 3} value={value} onChange={onChange} />
       </Radio>
       <Radio style={radioStyle} value={4}>
-        <InputSpecified disabled={currentRadio !== 4} value={value} onChange={onChange} />
+        <SpecifiedInput disabled={currentRadio !== 4} value={value} onChange={onChange} />
       </Radio>
     </Radio.Group>
   )

@@ -2,7 +2,7 @@ import { Dropdown, Input } from 'antd'
 import { log } from '@/common/Logger.ts'
 import Cron from '@/components/cron'
 
-export default function CronFC(props: { value: string; onChange: (val: string) => void }) {
+export default function CronFC(props: { value: string; onChange: (newValue: string) => void }) {
   const { value, onChange } = props
 
   return (
@@ -21,6 +21,5 @@ export default function CronFC(props: { value: string; onChange: (val: string) =
     >
       <Input value={value} />
     </Dropdown>
-    // <></>
   )
 }

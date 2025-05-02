@@ -1,26 +1,26 @@
 import React, { useMemo } from 'react'
 import { Checkbox, Col, Row } from 'antd'
 
-function InputSpecified(props: any) {
+const weekOptions = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
+
+function SpecifiedInput(props: any) {
   const { disabled, value, onChange } = props
   let selected = []
   if (!disabled) {
-    selected = value.split(',').map(v => parseInt(v, 10))
+    selected = value.split(',')
   }
-  const onChangeSelected = v => onChange(v.length === 0 ? '0' : v.join(','))
+  const onChangeSelected = (v: any[]) => onChange(v.length === 0 ? 'SUN' : v.join(','))
 
   const checkList = useMemo(() => {
-    const checks = []
-    for (let i = 0; i < 60; i++) {
-      checks.push(
-        <Col key={i} span={4}>
-          <Checkbox disabled={disabled} value={i}>
-            {i}
+    return weekOptions.map(item => {
+      return (
+        <Col key={item} span={3}>
+          <Checkbox disabled={disabled} value={item}>
+            {item}
           </Checkbox>
         </Col>
       )
-    }
-    return checks
+    })
   }, [disabled])
 
   return (
@@ -34,4 +34,4 @@ function InputSpecified(props: any) {
   )
 }
 
-export default InputSpecified
+export default SpecifiedInput

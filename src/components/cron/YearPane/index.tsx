@@ -1,48 +1,50 @@
-import { Radio } from 'antd'
-import InputFromInterval from './InputFromInterval'
-import InputFromTo from './InputFromTo'
-import InputSpecified from './InputSpecified'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
+import React, { useMemo } from 'react'
+import { Radio, RadioChangeEvent } from 'antd'
+
+import FromToInput from './FromToInput.tsx'
+import SpecifiedInput from './SpecifiedInput.tsx'
+import IntervalInput from './IntervalInput.tsx'
 
 const radioStyle = { display: 'block', lineHeight: '32px' }
 
-function YearPane(props: any) {
+function YearPane(props: { value: string; onChange: (val: string) => void }) {
   const { value, onChange } = props
-  let currentRadio = 0
-  if (value === '*') {
-    currentRadio = 0
-  } else if (value === '?') {
-    currentRadio = 1
-  } else if (value.indexOf('-') > -1) {
-    currentRadio = 2
-  } else if (value.indexOf('/') > -1) {
-    currentRadio = 3
-  } else {
-    currentRadio = 4
-  }
 
-  const onChangeRadio = e => {
+  const currentYear = useMemo(() => new Date().getUTCFullYear(), [])
+  const defaultValues = useMemo(
+    () => ['*', '?', `${currentYear}-${currentYear + 10}`, `${currentYear}/1`, `${currentYear}`],
+    [currentYear]
+  )
+
+  const currentRadio = useMemo(() => {
+    if (value === '*') return 0
+    if (value === '?') return 1
+    if (value.includes('-')) return 2
+    if (value.includes('/')) return 3
+    return 4
+  }, [value])
+
+  const onChangeRadio = (e: RadioChangeEvent) => {
     const valueType = e.target.value
-    const currentYear = new Date().getUTCFullYear()
-    const defaultValues = ['*', '?', `${currentYear}-${currentYear + 10}`, `${currentYear}/1`, `${currentYear}`]
     onChange(defaultValues[valueType])
   }
 
   return (
     <Radio.Group style={{ width: '100%' }} value={currentRadio} onChange={onChangeRadio}>
-      <Radio style={radioStyle} value={0}>
-        每年
-      </Radio>
-      <Radio style={radioStyle} value={1}>
-        不指定
-      </Radio>
+      <div style={{ display: 'flex', gap: '24px' }}>
+        <Radio value={0}>每年</Radio>
+        <Radio value={1}>不指定年</Radio>
+      </div>
       <Radio style={radioStyle} value={2}>
-        <InputFromTo disabled={currentRadio !== 2} value={value} onChange={onChange} />
+        <FromToInput disabled={currentRadio !== 2} value={value} onChange={onChange} />
       </Radio>
       <Radio style={radioStyle} value={3}>
-        <InputFromInterval disabled={currentRadio !== 3} value={value} onChange={onChange} />
+        <IntervalInput disabled={currentRadio !== 3} value={value} onChange={onChange} />
       </Radio>
       <Radio style={radioStyle} value={4}>
-        <InputSpecified disabled={currentRadio !== 4} value={value} onChange={onChange} />
+        <SpecifiedInput disabled={currentRadio !== 4} value={value} onChange={onChange} />
       </Radio>
     </Radio.Group>
   )

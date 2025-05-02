@@ -1,7 +1,6 @@
-import { Button, Space, Tabs } from 'antd'
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-import React, { JSXElementConstructor, ReactElement, ReactNode, useCallback, useEffect, useState } from 'react'
+import { Button, message, Space, Tabs } from 'antd'
+
+import { JSXElementConstructor, ReactElement, ReactNode, useCallback, useEffect, useState } from 'react'
 import { dayRegex, hourRegex, minuteRegex, monthRegex, secondRegex, weekRegex, yearRegex } from './utils/cronRegex.ts' // 导入正则表达式模块，用于验证每个 cron 字段的合法性
 import DayPane from './DayPane' // 导入不同时间字段面板组件
 import HourPane from './HourPane'
@@ -11,8 +10,6 @@ import SecondPane from './SecondPane'
 import WeekPane from './WeekPane'
 import YearPane from './YearPane'
 import { ICronProps } from '@/components/cron/index-conf' // 导入类型定义接口
-
-const { TabPane } = Tabs // 使用 Tabs 组件中的 TabPane 组件
 
 // 设置 Tab 样式
 const tabPaneStyle = {
@@ -31,10 +28,11 @@ const getTabTitle = (
     | ReactElement<unknown, string | JSXElementConstructor<any>>
     | Iterable<ReactNode>
     | null
-    | undefined,
+    | undefined
 ): ReactNode => <div style={{ width: 50, textAlign: 'center' }}>{text}</div>
 
-export default function Cron(props: ICronProps) {
+// 组件函数
+function Cron(props: ICronProps) {
   // 从 props 中解构获取传入的值
   const { style, footerStyle, footerRenderer, value, onOk } = props
 
@@ -134,55 +132,115 @@ export default function Cron(props: ICronProps) {
     )
   }, [footerRenderer, onReset, onGenerate])
 
+  const getCronExpression = () => {
+    return [second || '*', minute || '*', hour || '*', day || '*', month || '*', week || '?', year || '*'].join(' ')
+  }
+
   return (
     <div
       style={{
+        display: 'flex',
+        flexDirection: 'column',
         backgroundColor: '#fff',
-        borderRadius: '8px',
+        borderRadius: '10px',
         outline: 'none',
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
         width: 600,
+        height: style?.height || 'auto',
         ...style, // 可以通过 style prop 覆盖样式
       }}
     >
-      {/* Tabs 组件用于展示不同的 cron 字段面板 */}
-      <Tabs
-        centered
-        tabPosition={'top'}
-        type="line"
-        destroyInactiveTabPane
-        activeKey={currentTab}
-        onChange={setCurrentTab} // 切换 Tab 时更新当前 Tab
+      {/* 页头 + 内容部分（Tabs） */}
+      <div style={{ flex: 1, overflow: 'auto', minHeight: 0 }}>
+        <Tabs
+          centered
+          tabPosition={'top'}
+          type="line"
+          destroyInactiveTabPane
+          activeKey={currentTab}
+          onChange={setCurrentTab}
+          items={[
+            {
+              key: '1',
+              label: <span style={{ fontWeight: 'bold' }}>{getTabTitle('秒')}</span>, // 加粗秒标签
+              children: <SecondPane value={second} onChange={setSecond} />,
+              style: tabPaneStyle,
+            },
+            {
+              key: '2',
+              label: <span style={{ fontWeight: 'bold' }}>{getTabTitle('分')}</span>, // 加粗分标签
+              children: <MinutePane value={minute} onChange={setMinute} />,
+              style: tabPaneStyle,
+            },
+            {
+              key: '3',
+              label: <span style={{ fontWeight: 'bold' }}>{getTabTitle('时')}</span>, // 加粗时标签
+              children: <HourPane value={hour} onChange={setHour} />,
+              style: tabPaneStyle,
+            },
+            {
+              key: '4',
+              label: <span style={{ fontWeight: 'bold' }}>{getTabTitle('日')}</span>, // 加粗日标签
+              children: <DayPane value={day} onChange={onChangeDay} />,
+              style: tabPaneStyle,
+            },
+            {
+              key: '5',
+              label: <span style={{ fontWeight: 'bold' }}>{getTabTitle('月')}</span>, // 加粗月标签
+              children: <MonthPane value={month} onChange={setMonth} />,
+              style: tabPaneStyle,
+            },
+            {
+              key: '6',
+              label: <span style={{ fontWeight: 'bold' }}>{getTabTitle('周')}</span>, // 加粗周标签
+              children: <WeekPane value={week} onChange={onChangeWeek} />,
+              style: tabPaneStyle,
+            },
+            {
+              key: '7',
+              label: <span style={{ fontWeight: 'bold' }}>{getTabTitle('年')}</span>, // 加粗年标签
+              children: <YearPane value={year} onChange={setYear} />,
+              style: tabPaneStyle,
+            },
+          ]}
+        />
+      </div>
+
+      {/* 页脚部分(flex + 左右布局）：Cron 表达式 + 操作按钮 */}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          borderTop: '1px solid #e8e8e8',
+          padding: 10,
+          margin: 0,
+          ...footerStyle,
+        }}
       >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontFamily: 'monospace', fontSize: 12, color: '#888' }}>
+            Cron: <code>{getCronExpression()}</code>
+          </span>
+          <Button
+            size="small"
+            onClick={async () => {
+              try {
+                await navigator.clipboard.writeText(getCronExpression())
+                message.success('已复制到剪贴板')
+              } catch (err) {
+                message.error('复制失败，请手动复制')
+              }
+            }}
+          >
+            复制
+          </Button>
+        </div>
 
-        {/* 每个 TabPane 对应一个时间字段面板 */}
-        <TabPane tab={getTabTitle('秒')} key="1" style={tabPaneStyle}>
-          <SecondPane value={second} onChange={setSecond} />
-        </TabPane>
-        <TabPane tab={getTabTitle('分')} key="2" style={tabPaneStyle}>
-          <MinutePane value={minute} onChange={setMinute} />
-        </TabPane>
-        <TabPane tab={getTabTitle('时')} key="3" style={tabPaneStyle}>
-          <HourPane value={hour} onChange={setHour} />
-        </TabPane>
-        <TabPane tab={getTabTitle('日')} key="4" style={tabPaneStyle}>
-          <DayPane value={day} onChange={onChangeDay} />
-        </TabPane>
-        <TabPane tab={getTabTitle('月')} key="5" style={tabPaneStyle}>
-          <MonthPane value={month} onChange={setMonth} />
-        </TabPane>
-        <TabPane tab={getTabTitle('周')} key="6" style={tabPaneStyle}>
-          <WeekPane value={week} onChange={onChangeWeek} />
-        </TabPane>
-        <TabPane tab={getTabTitle('年')} key="7" style={tabPaneStyle}>
-          <YearPane value={year} onChange={setYear} />
-        </TabPane>
-      </Tabs>
-
-      {/* 页脚部分：显示重置按钮和生成按钮 */}
-      <div style={{ borderTop: '1px solid #e8e8e8', padding: 10, textAlign: 'right', ...footerStyle }}>
         {footerRendererWrapper() || null}
       </div>
     </div>
   )
 }
+
+export default Cron

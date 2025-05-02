@@ -1,18 +1,17 @@
-import React from 'react'
 import { InputNumber } from 'antd'
 
-function InputFromTo(props: any) {
+function FromToInput(props: any) {
   const { disabled, value, onChange } = props
   let from = 0
   let to = 0
   if (!disabled) {
-    ;[from, to] = value.split('-').map(v => parseInt(v, 10))
+    ;[from, to] = value.split('-').map((v: string) => parseInt(v, 10))
   }
-  const onChangeFrom = v => onChange(`${v || 0}-${to}`)
-  const onChangeTo = v => onChange(`${from}-${v || 0}`)
+  const handleFromChange = (v: any) => onChange(`${v || 0}-${to}`)
+  const handleToChange = (v: any) => onChange(`${from}-${v || 0}`)
 
   return (
-    <React.Fragment>
+    <span>
       从&nbsp;
       <InputNumber
         disabled={disabled}
@@ -20,22 +19,22 @@ function InputFromTo(props: any) {
         max={59}
         value={from}
         size="small"
-        onChange={onChangeFrom}
+        onChange={handleFromChange}
         style={{ width: 100 }}
       />
-      &nbsp;-&nbsp;
+      &nbsp;到&nbsp;
       <InputNumber
         disabled={disabled}
         min={0}
         max={59}
         value={to}
         size="small"
-        onChange={onChangeTo}
+        onChange={handleToChange}
         style={{ width: 100 }}
       />
-      &nbsp;秒，每秒执行一次
-    </React.Fragment>
+      &nbsp;分钟，每分钟执行一次（使用 <code>-</code> 范围值）
+    </span>
   )
 }
 
-export default InputFromTo
+export default FromToInput

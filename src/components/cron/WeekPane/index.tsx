@@ -1,9 +1,8 @@
-import { Radio } from 'antd'
-import React from 'react'
-import InputFromTo from './InputFromTo'
-import InputLast from './InputLast'
-import InputSpecified from './InputSpecified'
-import InputTarget from './InputTarget'
+import { Radio, RadioChangeEvent } from 'antd'
+import FromToInput from './FromToInput.tsx'
+import LastToInput from './LastToInput.tsx'
+import SpecifiedInput from './SpecifiedInput.tsx'
+import TargetToInput from './TargetToInput.tsx'
 
 const radioStyle = { display: 'block', lineHeight: '32px' }
 
@@ -24,7 +23,7 @@ function WeekPane(props: any) {
     currentRadio = 5
   }
 
-  const onChangeRadio = e => {
+  const onChangeRadio = (e: RadioChangeEvent) => {
     const valueType = e.target.value
     const defaultValues = ['*', '?', 'SUN-MON', '1#MON', 'SUNL', 'SUN']
     onChange(defaultValues[valueType])
@@ -39,16 +38,16 @@ function WeekPane(props: any) {
         不指定
       </Radio>
       <Radio style={radioStyle} value={2}>
-        <InputFromTo disabled={currentRadio !== 2} value={value} onChange={onChange} />
+        <FromToInput disabled={currentRadio !== 2} value={value} onChange={onChange} />
       </Radio>
       <Radio style={radioStyle} value={3}>
-        <InputTarget disabled={currentRadio !== 3} value={value} onChange={onChange} />
+        <TargetToInput disabled={currentRadio !== 3} value={value} onChange={onChange} />
       </Radio>
       <Radio style={radioStyle} value={4}>
-        <InputLast disabled={currentRadio !== 4} value={value} onChange={onChange} />
+        <LastToInput disabled={currentRadio !== 4} value={value} onChange={onChange} />
       </Radio>
       <Radio style={radioStyle} value={5}>
-        <InputSpecified disabled={currentRadio !== 5} value={value} onChange={onChange} />
+        <SpecifiedInput disabled={currentRadio !== 5} value={value} onChange={onChange} />
       </Radio>
     </Radio.Group>
   )

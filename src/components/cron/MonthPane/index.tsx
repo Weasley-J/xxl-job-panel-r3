@@ -1,8 +1,7 @@
-import { Radio } from 'antd'
-import React from 'react'
-import InputFromInterval from './InputFromInterval'
-import InputFromTo from './InputFromTo'
-import InputSpecified from './InputSpecified'
+import { Radio, RadioChangeEvent } from 'antd'
+import IntervalInput from './IntervalInput.tsx'
+import FromToInput from './FromToInput.tsx'
+import SpecifiedInput from './SpecifiedInput.tsx'
 
 const radioStyle = { display: 'block', lineHeight: '32px' }
 
@@ -19,7 +18,7 @@ function MonthPane(props: any) {
     currentRadio = 3
   }
 
-  const onChangeRadio = e => {
+  const onChangeRadio = (e: RadioChangeEvent) => {
     const valueType = e.target.value
     const defaultValues = ['*', '1-1', '1/1', '1']
     onChange(defaultValues[valueType])
@@ -31,13 +30,13 @@ function MonthPane(props: any) {
         每一月
       </Radio>
       <Radio style={radioStyle} value={1}>
-        <InputFromTo disabled={currentRadio !== 1} value={value} onChange={onChange} />
+        <FromToInput disabled={currentRadio !== 1} value={value} onChange={onChange} />
       </Radio>
       <Radio style={radioStyle} value={2}>
-        <InputFromInterval disabled={currentRadio !== 2} value={value} onChange={onChange} />
+        <IntervalInput disabled={currentRadio !== 2} value={value} onChange={onChange} />
       </Radio>
       <Radio style={radioStyle} value={3}>
-        <InputSpecified disabled={currentRadio !== 3} value={value} onChange={onChange} />
+        <SpecifiedInput disabled={currentRadio !== 3} value={value} onChange={onChange} />
       </Radio>
     </Radio.Group>
   )
