@@ -25,7 +25,9 @@ export function CronDialog({ onSave }: { onSave: (cron: string) => void }) {
         <DialogHeader>
           <DialogTitle>定时任务设置</DialogTitle>
           <DialogDescription>请选择一个 Cron 表达式来配置定时任务的执行时间.</DialogDescription>
-          <DialogDescription>当前表达式: <code>{value}</code></DialogDescription>
+          <DialogDescription>
+            当前表达式: <code>{value}</code>
+          </DialogDescription>
         </DialogHeader>
 
         <Cron
@@ -35,7 +37,6 @@ export function CronDialog({ onSave }: { onSave: (cron: string) => void }) {
             setValue(newValue)
           }}
         />
-
       </DialogContent>
     </Dialog>
   )

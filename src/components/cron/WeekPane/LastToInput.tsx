@@ -21,13 +21,7 @@ const LastToInput: FC<LastToInputProps> = ({ disabled, value, onChange }) => {
   return (
     <>
       本月的最后一个&nbsp;
-      <WeekSelect
-        disabled={disabled}
-        value={lastDay}
-        size="small"
-        onChange={handleChange}
-        style={{ width: 100 }}
-      />
+      <WeekSelect disabled={disabled} value={lastDay} size="small" onChange={handleChange} style={{ width: 100 }} />
       &nbsp;执行一次
     </>
   )

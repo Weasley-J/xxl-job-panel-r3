@@ -28,7 +28,7 @@ const getTabTitle = (
     | ReactElement<unknown, string | JSXElementConstructor<any>>
     | Iterable<ReactNode>
     | null
-    | undefined,
+    | undefined
 ): ReactNode => <div style={{ width: 50, textAlign: 'center' }}>{text}</div>
 
 // 组件函数
