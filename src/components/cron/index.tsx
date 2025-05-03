@@ -1,4 +1,4 @@
-import { Button, message, Space, Tabs } from 'antd'
+import { Button, Card, message, Space, Tabs } from 'antd'
 import { CopyOutlined } from '@ant-design/icons'
 import { JSXElementConstructor, ReactElement, ReactNode, useCallback, useEffect, useState } from 'react'
 import { dayRegex, hourRegex, minuteRegex, monthRegex, secondRegex, weekRegex, yearRegex } from './utils/cronRegex.ts'
@@ -139,11 +139,10 @@ function Cron(props: ICronProps) {
   }
 
   return (
-    <div
+    <Card
       style={{
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: '#fff',
         borderRadius: '10px',
         outline: 'none',
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
@@ -214,7 +213,7 @@ function Cron(props: ICronProps) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          borderTop: '1px solid #e8e8e8',
+          borderTop: '0.8px solid #e8e8e8',
           padding: 10,
           margin: 0,
           ...footerStyle,
@@ -241,7 +240,7 @@ function Cron(props: ICronProps) {
         {footerRendererWrapper() || null}
       </div>
       {contextHolder}
-    </div>
+    </Card>
   )
 }
 

@@ -1,50 +1,69 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import LayoutFC from '@/components/layout' // 👈 新的 Index
+
+import Layout from '@/components/layout'
 import NotFound from '@/pages/NotFound'
-import ProtectedRoute from '@/components/ProtectedRoute'
-import Dashboard from '@/components/Dashboard'
-import UserManagement from '@/pages/system/UserManagement'
-import PermissionManagement from '@/pages/system/PermissionManagement'
+// import ProtectedRoute from '@/components/ProtectedRoute'
+import Dashboard from '@/pages/Dashboard'
 import LoginPage from '@/pages/login'
+import OverflowTest from '@/pages/extra/OverflowTest'
 
-// eslint-disable-next-line react-refresh/only-export-components
-export const moduleURIs = { system: '/sys', order: '/order' }
-
-export const URIs = {
+// 所有路径统一管理
+const URIs = {
   home: '/',
   login: '/login',
-  welcome: '/welcome',
   dashboard: '/dashboard',
   overflow: '/overflow',
+  report: '/report',
+  tasks: '/tasks',
+  logs: '/logs',
+  executors: '/executors',
+  users: '/users',
   notFound: '/404',
   noPermission: '/403',
-  module: moduleURIs,
-  system: {
-    user: moduleURIs.system + '/user/list',
-    menu: moduleURIs.system + '/menu/list',
-    dept: moduleURIs.system + '/dept/list',
-    role: moduleURIs.system + '/role/list',
-  },
-  order: {
-    list: moduleURIs.order + '/list',
-    shipper: moduleURIs.order + '/shipper',
-    aggregation: moduleURIs.order + '/aggregation',
-  },
 }
 
+// 页面组件封装（可以考虑拆到单独文件）
+const components = {
+  ReportComponent: () => <>ReportComponent</>,
+  TaskManagerComponent: () => <>你好 TaskManagerComponent</>,
+  LogViewerComponent: () => <>LogViewerComponent</>,
+  ExecutorComponent: () => <>ExecutorComponent</>,
+  UserComponent: () => <>UserComponent</>,
+}
+
+// 路由配置
 const AppRoutes: React.FC = () => {
   return (
     <Routes>
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/" element={<ProtectedRoute><LayoutFC /></ProtectedRoute>}>
+      {/* 登录页 */}
+      <Route path={URIs.login} element={<LoginPage />} />
+
+      {/* 受保护页面区域 */}
+      <Route
+        path={URIs.home}
+        element={
+          // <ProtectedRoute>
+          //   <Layout />
+          // </ProtectedRoute>
+          <Layout />
+        }
+      >
         <Route index element={<Dashboard />} />
-        <Route path="system/users" element={<UserManagement />} />
-        <Route path="system/permissions" element={<PermissionManagement />} />
+        <Route path={URIs.dashboard} element={<Dashboard />} />
+        <Route path={URIs.overflow} element={<OverflowTest />} />
+        <Route path={URIs.report} element={<components.ReportComponent />} />
+        <Route path={URIs.tasks} element={<components.TaskManagerComponent />} />
+        <Route path={URIs.logs} element={<components.LogViewerComponent />} />
+        <Route path={URIs.executors} element={<components.ExecutorComponent />} />
+        <Route path={URIs.users} element={<components.UserComponent />} />
       </Route>
+
+      {/* 404 页面 */}
       <Route path="*" element={<NotFound />} />
     </Routes>
   )
 }
 
-export default AppRoutes
+// 导出组件与路径配置
+export { URIs, AppRoutes, components as PageComponents }

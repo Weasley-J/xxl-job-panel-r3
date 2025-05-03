@@ -6,6 +6,7 @@ import { App } from 'antd'
 import type { MessageInstance } from 'antd/es/message/interface'
 import type { ModalStaticFunctions } from 'antd/es/modal/confirm'
 import type { NotificationInstance } from 'antd/es/notification/interface'
+import { ThemeConfig } from 'antd/es/config-provider'
 
 let message: MessageInstance
 let notification: NotificationInstance
@@ -22,4 +23,10 @@ export default function AntdGlobalProvider(): null {
   return null
 }
 
-export { message, notification, modal }
+const antdTheme: ThemeConfig = {
+  token: {
+    // 主题 token
+  },
+}
+
+export { message, notification, modal, antdTheme }

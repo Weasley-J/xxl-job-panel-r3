@@ -8,7 +8,6 @@ export default function CronEditor(props: { value: string; onChange: (newValue: 
 
   return (
     <Dropdown
-      arrow
       trigger={['click']}
       dropdownRender={() => (
         <Cron

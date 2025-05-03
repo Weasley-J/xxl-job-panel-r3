@@ -1,15 +1,14 @@
 import '@/App.css'
 
-import { ThemeProvider } from '@/components/ui/theme-provider'
+import { ThemeProvider } from '@/components/ThemeProvider.tsx'
 import { BrowserRouter } from 'react-router-dom'
-import AppRoutes from '@/routes'
+import { AppRoutes } from '@/routes'
 import { Toaster } from 'sonner'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import { Environment } from '@/types/enum.ts'
-import { App as AntdApp, ConfigProvider } from 'antd'
+import { App as AntdApp, ConfigProvider, theme } from 'antd'
 import useZustandStore from '@/stores/useZustandStore.ts'
-import AntdGlobalProvider from '@/common/AntdGlobalProvider.ts'
-import { antdTheme } from '@/config/theme.ts'
+import AntdGlobalProvider, { antdTheme } from '@/common/AntdGlobalProvider.ts'
 import zhCN from 'antd/lib/locale/zh_CN'
 import enUS from 'antd/lib/locale/en_US'
 import 'dayjs/locale/zh-cn'
@@ -19,14 +18,17 @@ if (Environment.isLocaleCN()) dayjs.locale('zh-cn')
 if (isDebugEnable) log.debug(`Debug enabled on '${Environment.current}' mode.`)
 
 function App() {
-  const isDarkEnable = useZustandStore(state => state.isDarkEnable)
+  const { isDarkEnable } = useZustandStore()
 
   return (
     <ThemeProvider defaultTheme={isDarkEnable ? 'dark' : 'light'} storageKey="vite-ui-theme">
       <Toaster />
       <BrowserRouter>
         {/* 尽可能减少 Antd 覆盖范围 */}
-        <ConfigProvider theme={antdTheme} locale={Environment.isLocaleCN() ? zhCN : enUS}>
+        <ConfigProvider
+          theme={{ ...antdTheme, algorithm: isDarkEnable ? theme.darkAlgorithm : theme.defaultAlgorithm }}
+          locale={Environment.isLocaleCN() ? zhCN : enUS}
+        >
           <AntdApp>
             <AntdGlobalProvider />
             <div className="antd-wrapper">

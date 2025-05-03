@@ -5,6 +5,7 @@ import { isDebugEnable, log } from '@/common/Logger.ts'
 import { IRequestConfig } from '@/types/axios-conf'
 import { URIs } from '@/routes'
 import { toast } from 'sonner'
+import { objectUtils } from '@/common/objectUtils.ts'
 
 /**
  * Instantiate an axios instance.
@@ -54,8 +55,10 @@ axiosClient.interceptors.response.use(
 
     if (isDebugEnable) log.debug('原始返回：', data)
 
-    if (code === 500001) return handleSessionExpired(msg, data)
-    if (code !== 200) return handleError(msg, data)
+    if (objectUtils.hasKey('code', response)) {
+      if (code === 500001) return handleSessionExpired(msg, data)
+      if (code !== 200) return handleError(msg, data)
+    }
 
     return data // 返回原始数据
   },

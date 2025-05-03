@@ -3,14 +3,15 @@ import { Button } from '@/components/ui/button.tsx'
 import { Input } from '@/components/ui/input.tsx'
 import { Label } from '@/components/ui/label.tsx'
 import { Checkbox } from '@/components/ui/checkbox.tsx'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import api from '@/api'
 import storage from '@/utils/storage.ts'
 import { toast } from 'sonner'
 import { log } from '@/common/Logger.ts'
+import useZustandStore from '@/stores/useZustandStore.ts'
 
 export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<'form'>) {
-  storage.remove('token')
+  const { setUserInfo } = useZustandStore()
   const [rememberMe, setRememberMe] = useState(true)
   const [loading, setLoading] = useState(false)
 
@@ -28,21 +29,21 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
         ifRemember: rememberMe,
       })
       if (code === 200) {
+        const _userInfo = { username: userName }
+        setUserInfo(_userInfo)
+        // storage.set('user-info', _userInfo)
         storage.set('token', true)
         toast.success('登录成功')
-
         setTimeout(() => {
           const urlSearchParams = new URLSearchParams(window.location.search)
           location.href = urlSearchParams.get('callback') || '/'
-        }, 1000)
+        }, 800)
       }
     } catch (e) {
       log.error(e)
       setLoading(false)
     }
   }
-
-  useEffect(() => {}, [])
 
   return (
     <form className={cn('flex flex-col gap-6', className)} onSubmit={onSubmit} {...props}>
@@ -59,7 +60,14 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
           <div className="flex items-center">
             <Label htmlFor="password">密码</Label>
           </div>
-          <Input id="password" name="password" placeholder="请输入密码" type="password" required />
+          <Input
+            id="password"
+            name="password"
+            placeholder="请输入密码"
+            type="password"
+            required={false}
+            defaultValue="123456"
+          />
         </div>
         <div className="flex items-center space-x-2">
           <Checkbox id="rememberMe" checked={rememberMe} onCheckedChange={() => setRememberMe(!rememberMe)} />

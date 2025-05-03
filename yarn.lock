@@ -884,6 +884,19 @@
   dependencies:
     "@radix-ui/react-compose-refs" "1.1.2"
 
+"@radix-ui/react-switch@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.npmmirror.com/@radix-ui/react-switch/-/react-switch-1.2.2.tgz#aee51a72b93b49d625e201e32c43deb7957e4641"
+  integrity sha512-7Z8n6L+ifMIIYZ83f28qWSceUpkXuslI2FJ34+kDMTiyj91ENdpdQ7VCidrzj5JfwfZTeano/BnGBbu/jqa5rQ==
+  dependencies:
+    "@radix-ui/primitive" "1.1.2"
+    "@radix-ui/react-compose-refs" "1.1.2"
+    "@radix-ui/react-context" "1.1.2"
+    "@radix-ui/react-primitive" "2.1.0"
+    "@radix-ui/react-use-controllable-state" "1.2.2"
+    "@radix-ui/react-use-previous" "1.1.1"
+    "@radix-ui/react-use-size" "1.1.1"
+
 "@radix-ui/react-tabs@^1.1.9":
   version "1.1.9"
   resolved "https://registry.npmmirror.com/@radix-ui/react-tabs/-/react-tabs-1.1.9.tgz#4170432717f32d2e75de3a9853ad0a557ccc1346"

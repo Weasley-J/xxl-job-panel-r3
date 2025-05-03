@@ -28,7 +28,7 @@ export default {
       return jsonValue ? JSON.parse(jsonValue) : null
     } catch (error) {
       log.error(`Error getting value from localStorage: ${error}`)
-      return null
+      return localStorage.getItem(key) as T
     }
   },
 
