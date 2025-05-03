@@ -1,4 +1,4 @@
-import { Button, Space, Tabs } from 'antd'
+import { Button, message, Space, Tabs } from 'antd'
 
 import { JSXElementConstructor, ReactElement, ReactNode, useCallback, useEffect, useState } from 'react'
 import { dayRegex, hourRegex, minuteRegex, monthRegex, secondRegex, weekRegex, yearRegex } from './utils/cronRegex.ts'
@@ -10,7 +10,6 @@ import SecondPane from './SecondPane'
 import WeekPane from './WeekPane'
 import YearPane from './YearPane'
 import { ICronProps } from './index-conf'
-import { toast } from '@/utils/toast.ts'
 
 // 设置 Tab 样式
 const tabPaneStyle = {
@@ -228,9 +227,9 @@ function Cron(props: ICronProps) {
             onClick={async () => {
               try {
                 await navigator.clipboard.writeText(getCronExpression())
-                toast.success('复制成功')
+                message.success('复制成功')
               } catch (err) {
-                toast.error('复制失败，请手动复制')
+                message.error('复制失败，请手动复制')
               }
             }}
           >
