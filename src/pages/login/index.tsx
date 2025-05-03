@@ -2,7 +2,7 @@ import { LoginForm } from '@/pages/login/LoginForm.tsx'
 import { Clock } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
-export default function Login() {
+export default function LoginPage() {
   const navigate = useNavigate()
   return (
     <div className="grid min-h-svh lg:grid-cols-2">

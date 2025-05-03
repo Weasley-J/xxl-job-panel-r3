@@ -1,5 +1,5 @@
 import { Button, message, Space, Tabs } from 'antd'
-
+import { CopyOutlined } from '@ant-design/icons'
 import { JSXElementConstructor, ReactElement, ReactNode, useCallback, useEffect, useState } from 'react'
 import { dayRegex, hourRegex, minuteRegex, monthRegex, secondRegex, weekRegex, yearRegex } from './utils/cronRegex.ts'
 import DayPane from './DayPane'
@@ -45,6 +45,8 @@ function Cron(props: ICronProps) {
   const [month, setMonth] = useState('*')
   const [week, setWeek] = useState('?')
   const [year, setYear] = useState('*')
+
+  const [messageApi, contextHolder] = message.useMessage()
 
   // 解析传入的 cron 表达式
   const onParse = useCallback(() => {
@@ -227,18 +229,18 @@ function Cron(props: ICronProps) {
             onClick={async () => {
               try {
                 await navigator.clipboard.writeText(getCronExpression())
-                message.success('复制成功')
+                messageApi.success('复制成功')
               } catch (err) {
-                message.error('复制失败，请手动复制')
+                messageApi.error('复制失败，请手动复制')
               }
             }}
-          >
-            复制
-          </Button>
+            icon={<CopyOutlined />}
+          />
         </div>
 
         {footerRendererWrapper() || null}
       </div>
+      {contextHolder}
     </div>
   )
 }

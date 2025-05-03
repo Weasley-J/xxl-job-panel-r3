@@ -1,9 +1,11 @@
 import React from 'react'
 
 const Footer: React.FC = () => (
-  <footer className="h-10 bg-white border-t flex items-center justify-center text-sm text-gray-500">
-    © 2025 Your Company. All rights reserved.
-  </footer>
+  <div>
+    <footer className="h-4 text-xs text-muted-foreground flex items-center justify-center">
+      © 2025 {import.meta.env.VITE_APP_NAME}. All rights reserved.
+    </footer>
+  </div>
 )
 
 export default Footer

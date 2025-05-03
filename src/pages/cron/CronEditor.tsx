@@ -1,3 +1,4 @@
+import { ScheduleOutlined } from '@ant-design/icons'
 import { Dropdown, Input } from 'antd'
 import { log } from '@/common/Logger.ts'
 import Cron from '@/components/cron'
@@ -7,8 +8,8 @@ export default function CronEditor(props: { value: string; onChange: (newValue: 
 
   return (
     <Dropdown
+      arrow
       trigger={['click']}
-      placement="bottomLeft"
       dropdownRender={() => (
         <Cron
           value={value}
@@ -19,7 +20,7 @@ export default function CronEditor(props: { value: string; onChange: (newValue: 
         />
       )}
     >
-      <Input value={value} />
+      <Input value={value} placeholder="请选择一个 Cron 表达式来配置定时任务" addonAfter={<ScheduleOutlined />} />
     </Dropdown>
   )
 }

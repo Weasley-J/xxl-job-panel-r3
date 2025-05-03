@@ -25,7 +25,7 @@ function SpecifiedInput(props: any) {
 
   return (
     <React.Fragment>
-      指定
+      指定秒
       <br />
       <Checkbox.Group style={{ width: '100%' }} value={selected} onChange={onChangeSelected}>
         <Row>{checkList}</Row>

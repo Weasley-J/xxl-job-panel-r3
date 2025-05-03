@@ -1,18 +1,16 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import Layout from '@/components/layout/Layout'
+import LayoutFC from '@/components/layout' // 👈 新的 Index
 import NotFound from '@/pages/NotFound'
 import ProtectedRoute from '@/components/ProtectedRoute'
-import Dashboard from '@/pages/Dashboard'
-// 示例页面（你需要按菜单结构来创建对应页面）
+import Dashboard from '@/components/Dashboard'
 import UserManagement from '@/pages/system/UserManagement'
 import PermissionManagement from '@/pages/system/PermissionManagement'
-import Login from '@/pages/login'
+import LoginPage from '@/pages/login'
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const moduleURIs = { system: '/sys', order: '/order' }
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const URIs = {
   home: '/',
   login: '/login',
@@ -38,19 +36,11 @@ export const URIs = {
 const AppRoutes: React.FC = () => {
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route
-        path="/"
-        element={
-          <ProtectedRoute>
-            <Layout />
-          </ProtectedRoute>
-        }
-      >
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/" element={<ProtectedRoute><LayoutFC /></ProtectedRoute>}>
         <Route index element={<Dashboard />} />
         <Route path="system/users" element={<UserManagement />} />
         <Route path="system/permissions" element={<PermissionManagement />} />
-        {/* ...其他二级页面 */}
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
