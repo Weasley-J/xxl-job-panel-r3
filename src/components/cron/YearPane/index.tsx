@@ -34,8 +34,12 @@ function YearPane(props: { value: string; onChange: (val: string) => void }) {
   return (
     <Radio.Group style={{ width: '100%' }} value={currentRadio} onChange={onChangeRadio}>
       <div style={{ display: 'flex', gap: '24px' }}>
-        <Radio value={0}>每年</Radio>
-        <Radio value={1}>不指定年</Radio>
+        <Radio style={radioStyle} value={0}>
+          每年
+        </Radio>
+        <Radio style={radioStyle} value={1}>
+          不指定年
+        </Radio>
       </div>
       <Radio style={radioStyle} value={2}>
         <FromToInput disabled={currentRadio !== 2} value={value} onChange={onChange} />

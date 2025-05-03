@@ -38,7 +38,7 @@ function SpecifiedInput({ disabled, value, onChange }: SpecifiedInputProps) {
 
   return (
     <>
-      指定年份
+      指定年
       <br />
       <Checkbox.Group style={{ width: '100%' }} value={selected} onChange={onChangeSelected}>
         <Row>{checkList}</Row>
