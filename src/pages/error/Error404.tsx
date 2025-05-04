@@ -1,12 +1,21 @@
+import { Button, Result } from 'antd'
 import { useNavigate } from 'react-router-dom'
 
 function PageNotFound() {
   const navigate = useNavigate()
-  // @ts-ignore
   const navigateToHome = () => navigate('/')
   return (
     <>
-      <div>抱歉，您访问的页面不存在。</div>
+      <Result
+        status="404"
+        title="404"
+        subTitle="抱歉，您访问的页面不存在。"
+        extra={
+          <Button type="primary" onClick={navigateToHome}>
+            返回首页
+          </Button>
+        }
+      />
     </>
   )
 }
