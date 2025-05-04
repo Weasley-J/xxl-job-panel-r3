@@ -5,8 +5,8 @@
   "description": "A third-party React-based web admin panel for XXL-JOB.",
   "type": "module",
   "scripts": {
-    "local": "vite --mode developer_local --port 88 --host",
-    "dev": "vite --mode development --port 88 --host",
+    "local": "vite --mode developer_local --port 80 --host",
+    "dev": "vite --mode development --port 80 --host",
     "build:local": "tsc && vite build --mode developer_local",
     "build:dev": "tsc && vite build --mode development",
     "build": "tsc -b && vite build",
