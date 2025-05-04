@@ -1,16 +1,18 @@
 import React, { lazy } from 'react'
 import { Outlet } from 'react-router-dom'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar.tsx'
-import { SidebarFC } from '@/components/layout/SidebarFC.tsx'
+import { Sidebar } from '@/components/layout/Sidebar.tsx'
 import Header from '@/components/layout/Header.tsx'
 import Footer from '@/components/layout/Footer.tsx'
 import Lazy from '@/components/Lazy.tsx'
-// import styles from '@/components/layout/index.module.less'
+import useZustandStore from '@/stores/useZustandStore.ts'
 
 const Layout: React.FC = () => {
+  const { collapsed } = useZustandStore()
+
   return (
-    <SidebarProvider>
-      <SidebarFC />
+    <SidebarProvider defaultOpen={collapsed}>
+      <Sidebar />
       <SidebarInset>
         <div className="flex flex-col min-h-screen">
           <Header />

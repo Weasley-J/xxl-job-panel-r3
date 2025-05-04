@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import menuConfig, { MenuItem } from '@/config/menu.config'
+import { menuConfig, MenuItem } from '@/config/menu.config'
 
 const findBreadcrumbs = (menus: MenuItem[], path: string): MenuItem[] => {
   for (const menu of menus) {

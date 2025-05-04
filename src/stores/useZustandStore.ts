@@ -27,7 +27,7 @@ const useZustandStore = create<{
     const stored = storage.get('user-info') as User.Info
     return stored && typeof stored === 'object' ? stored : ({} as User.Info)
   })(),
-  collapsed: false,
+  collapsed: isTrue(storage.get('collapsed')),
   isDarkEnable: isTrue(storage.get('enableDark')),
   activeTab: '',
   /* setters */
@@ -39,9 +39,10 @@ const useZustandStore = create<{
   },
   setCollapsed: () => {
     set(state => {
-      const collapsed = state.collapsed
-      logUpdate(collapsed)
-      return { collapsed: !collapsed }
+      const newValue = !state.collapsed
+      storage.set('collapsed', newValue) // ✅ 保存新值
+      logUpdate(newValue)
+      return { collapsed: newValue }
     })
   },
   setIsDarkEnable: () => {

@@ -1,12 +1,10 @@
-// components/sidebar-left.tsx
 import * as React from 'react'
-import { useEffect } from 'react'
-import { BookOpenCheck, Clock, FileBarChart2, ListChecks, ServerCog, Users2 } from 'lucide-react'
+import { Clock } from 'lucide-react'
 
 import { NavUser } from '@/pages/user/NavUser.tsx'
 
 import {
-  Sidebar,
+  Sidebar as ShadUISidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
@@ -15,43 +13,17 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from '@/components/ui/sidebar'
-
-import api from '@/api'
 import useZustandStore from '@/stores/useZustandStore'
 import { log } from '@/common/Logger'
-import { User } from '@/types'
 import { NavSidebarGroupItem, NavyPrimary } from '@/components/common/NavyPrimary.tsx'
 import { useNavigate } from 'react-router-dom'
 import { URIs } from '@/routes'
+import { navMainItems } from '@/config/menu.config.ts'
 
-const navMainItems: NavSidebarGroupItem[] = [
-  { title: '运行报表', url: '/report', icon: FileBarChart2 },
-  { title: '任务管理', url: '/tasks', icon: ListChecks },
-  { title: '调度日志', url: '/logs', icon: BookOpenCheck },
-  { title: '执行器管理', url: '/executors', icon: ServerCog },
-  { title: '用户管理', url: '/users', icon: Users2 },
-]
-
-export function SidebarFC({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function Sidebar({ ...props }: React.ComponentProps<typeof ShadUISidebar>) {
   const { userInfo } = useZustandStore()
   const [activeItem, setActiveItem] = React.useState<NavSidebarGroupItem>(navMainItems[0])
-
-  const query: User.UserPageQuery = {
-    start: 0,
-    length: 10,
-    role: -1,
-    username: '',
-  }
-
-  // @ts-ignore
-  async function getUserList() {
-    const listResponse = await api.user.getUserList(query)
-    log.info('User data:', listResponse)
-  }
-
-  useEffect(() => {
-    // getUserList()
-  }, [])
+  const navigate = useNavigate()
 
   const username = userInfo.username || 'user'
   const user = {
@@ -60,9 +32,8 @@ export function SidebarFC({ ...props }: React.ComponentProps<typeof Sidebar>) {
     avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
   }
 
-  const navigate = useNavigate()
   return (
-    <Sidebar collapsible="icon" variant="sidebar" {...props}>
+    <ShadUISidebar collapsible="icon" variant="sidebar" {...props}>
       {/* 顶部区域 */}
       <SidebarHeader>
         <SidebarMenu>
@@ -102,6 +73,6 @@ export function SidebarFC({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
       {/* 收起栏 */}
       <SidebarRail />
-    </Sidebar>
+    </ShadUISidebar>
   )
 }

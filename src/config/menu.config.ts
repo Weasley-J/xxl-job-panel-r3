@@ -1,3 +1,6 @@
+import { NavSidebarGroupItem } from '@/components/common/NavyPrimary.tsx'
+import { BookOpenCheck, FileBarChart2, ListChecks, ServerCog, Users2 } from 'lucide-react'
+
 export interface MenuItem {
   name: string
   path: string
@@ -25,4 +28,12 @@ const menuConfig: MenuItem[] = [
   { name: '系统工具', path: '/tools' },
 ]
 
-export default menuConfig
+const navMainItems: NavSidebarGroupItem[] = [
+  { title: '运行报表', url: '/report', icon: FileBarChart2 },
+  { title: '任务管理', url: '/tasks', icon: ListChecks },
+  { title: '调度日志', url: '/logs', icon: BookOpenCheck },
+  { title: '执行器管理', url: '/executors', icon: ServerCog },
+  { title: '用户管理', url: '/users', icon: Users2 },
+]
+
+export { navMainItems, menuConfig }

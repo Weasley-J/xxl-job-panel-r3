@@ -2,11 +2,12 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 
 import Layout from '@/components/layout'
-// import ProtectedRoute from '@/components/ProtectedRoute'
 import Dashboard from '@/pages/Dashboard'
 import LoginPage from '@/pages/login'
 import OverflowTest from '@/pages/extra/OverflowTest'
 import Error404 from '@/pages/error/Error404.tsx'
+import { isFalse } from '@/common/booleanUtils'
+import ProtectedRoute from '@/routes/ProtectedRoute.tsx'
 
 // 所有路径统一管理
 const URIs = {
@@ -17,8 +18,8 @@ const URIs = {
   report: '/report',
   tasks: '/tasks',
   logs: '/logs',
-  executors: '/executors',
   users: '/users',
+  executors: '/executors',
   notFound: '/404',
   noPermission: '/403',
 }
@@ -36,17 +37,18 @@ const components = {
 const AppRoutes: React.FC = () => {
   return (
     <Routes>
-      {/* 登录页 */}
       <Route path={URIs.login} element={<LoginPage />} />
 
-      {/* 受保护页面区域 */}
       <Route
         path={URIs.home}
         element={
-          // <ProtectedRoute>
-          //   <Layout />
-          // </ProtectedRoute>
-          <Layout />
+          isFalse(import.meta.env.VITE_ENABLE_AUTH) ? (
+            <Layout />
+          ) : (
+            <ProtectedRoute>
+              <Layout />
+            </ProtectedRoute>
+          )
         }
       >
         <Route index element={<Dashboard />} />
@@ -59,7 +61,6 @@ const AppRoutes: React.FC = () => {
         <Route path={URIs.users} element={<components.UserComponent />} />
       </Route>
 
-      {/* 404 页面 */}
       <Route path="*" element={<Error404 />} />
     </Routes>
   )
