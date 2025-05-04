@@ -188,35 +188,6 @@ export namespace JobGroup {
   export type LoadJobGroupResponse = Result<Item>
 }
 
-export interface JobCodeSaveRequest {
-  id: number // 任务ID
-  glueSource: string // 源代码内容
-  glueRemark: string // 本次更新备注，4~100 字符
-}
-
-export interface XxlJobLogGlue {
-  id: number
-  jobId: number
-  glueType: string
-  glueSource: string
-  glueRemark: string
-  addTime: string // 建议用 string（ISO 时间格式）
-  updateTime: string
-}
-
-export interface JobCodeHomeResponse {
-  GlueTypeEnum: string
-  jobInfo: Job.JobItem
-  jobLogGlues: XxlJobLogGlue[]
-}
-
-export interface ChartInfoParams {
-  startDate: string // 格式：yyyy-MM-dd HH:mm:ss
-  endDate: string
-}
-
-export type ChartInfoResponse = Result
-
 // 任务日志
 export namespace JobLog {
   export interface LogItem {
@@ -292,3 +263,32 @@ export namespace JobLog {
     type: number
   }
 }
+
+export interface JobCodeSaveRequest {
+  id: number // 任务ID
+  glueSource: string // 源代码内容
+  glueRemark: string // 本次更新备注，4~100 字符
+}
+
+export interface XxlJobLogGlue {
+  id: number
+  jobId: number
+  glueType: string
+  glueSource: string
+  glueRemark: string
+  addTime: string // 建议用 string（ISO 时间格式）
+  updateTime: string
+}
+
+export interface JobCodeHomeResponse {
+  GlueTypeEnum: string
+  jobInfo: Job.JobItem
+  jobLogGlues: XxlJobLogGlue[]
+}
+
+export interface ChartInfoParams {
+  startDate: string // 格式：yyyy-MM-dd HH:mm:ss
+  endDate: string
+}
+
+export type ChartInfoResponse = Result

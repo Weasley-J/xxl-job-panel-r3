@@ -7,11 +7,9 @@ import { Result, User } from '@/types'
  */
 export default {
   user: {
-    // 登录
     login(params: LoginParams) {
       return apiClient.post<Result>('/login', undefined, { params })
     },
-    // 登出
     logout() {
       return apiClient.post<Result>('/logout', undefined)
     },
