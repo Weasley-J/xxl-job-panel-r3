@@ -3,7 +3,7 @@ import * as React from 'react'
 import { useEffect } from 'react'
 import { BookOpenCheck, Clock, FileBarChart2, ListChecks, ServerCog, Users2 } from 'lucide-react'
 
-import { NavUser } from '@/components/NavUser.tsx'
+import { NavUser } from '@/pages/user/NavUser.tsx'
 
 import {
   Sidebar,
@@ -20,7 +20,7 @@ import api from '@/api'
 import useZustandStore from '@/stores/useZustandStore'
 import { log } from '@/common/Logger'
 import { User } from '@/types'
-import { NavSidebarGroupItem, NavyPrimary } from '@/components/NavyPrimary.tsx'
+import { NavSidebarGroupItem, NavyPrimary } from '@/components/common/NavyPrimary.tsx'
 import { useNavigate } from 'react-router-dom'
 import { URIs } from '@/routes'
 

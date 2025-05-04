@@ -1,6 +1,6 @@
 import '@/App.css'
 
-import { ThemeProvider } from '@/components/ThemeProvider.tsx'
+import { ThemeProvider } from '@/components/common/ThemeProvider.tsx'
 import { BrowserRouter } from 'react-router-dom'
 import { AppRoutes } from '@/routes'
 import { Toaster } from 'sonner'
@@ -8,7 +8,7 @@ import { isDebugEnable, log } from '@/common/Logger.ts'
 import { Environment } from '@/types/enum.ts'
 import { App as AntdApp, ConfigProvider, theme } from 'antd'
 import useZustandStore from '@/stores/useZustandStore.ts'
-import AntdGlobalProvider, { antdTheme } from '@/common/AntdGlobalProvider.ts'
+import AntdProvider, { antdTheme } from '@/common/AntdProvider.ts'
 import zhCN from 'antd/lib/locale/zh_CN'
 import enUS from 'antd/lib/locale/en_US'
 import 'dayjs/locale/zh-cn'
@@ -30,7 +30,7 @@ function App() {
           locale={Environment.isLocaleCN() ? zhCN : enUS}
         >
           <AntdApp>
-            <AntdGlobalProvider />
+            <AntdProvider />
             <div className="antd-wrapper">
               <AppRoutes />
             </div>

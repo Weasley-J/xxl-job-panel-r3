@@ -1,5 +1,5 @@
 import { toast as sonnerToast } from 'sonner'
-import { message as antdMsg } from '@/common/AntdGlobalProvider'
+import { message as antdMsg } from '@/common/AntdProvider.ts'
 
 export const toast = {
   success: (msg: string, useAntd?: boolean) => {

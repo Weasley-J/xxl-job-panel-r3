@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { ChevronsUpDown, KeyRound, LogOut } from 'lucide-react'
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar.tsx'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,15 +11,15 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
+} from '@/components/ui/dropdown-menu.tsx'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog.tsx'
+import { Input } from '@/components/ui/input.tsx'
+import { Button } from '@/components/ui/button.tsx'
 
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar'
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar.tsx'
 import api from '@/api'
-import storage from '@/utils/storage'
-import { toast } from '@/utils/toast'
+import storage from '@/utils/storage.ts'
+import { toast } from '@/utils/toast.ts'
 import { URIs } from '@/routes'
 
 export function NavUser({
@@ -43,8 +43,7 @@ export function NavUser({
       toast.success('登出成功')
       storage.clear()
       setTimeout(() => {
-        const urlSearchParams = new URLSearchParams(window.location.search)
-        location.href = urlSearchParams.get('callback') || URIs.home
+        location.href = URIs.login
       }, 1000)
     }
   }
@@ -57,8 +56,7 @@ export function NavUser({
         toast.success('修改成功，请重新登录')
         setOpenPwdDialog(false)
         setTimeout(() => {
-          const urlSearchParams = new URLSearchParams(window.location.search)
-          location.href = urlSearchParams.get('callback') || URIs.login
+          location.href = URIs.login
         }, 1000)
       } else {
         toast.error(msg)
@@ -117,8 +115,20 @@ export function NavUser({
             <DialogTitle>修改密码</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
-            <Input type="password" placeholder="原密码" value={oldPwd} onChange={e => setOldPwd(e.target.value)} />
-            <Input type="password" placeholder="新密码" value={newPwd} onChange={e => setNewPwd(e.target.value)} />
+            <Input
+              type="password"
+              placeholder="原密码"
+              value={oldPwd}
+              required
+              onChange={e => setOldPwd(e.target.value)}
+            />
+            <Input
+              type="password"
+              placeholder="新密码"
+              value={newPwd}
+              required
+              onChange={e => setNewPwd(e.target.value)}
+            />
             <Button onClick={handleEditPwd} className="w-full">
               确认修改
             </Button>

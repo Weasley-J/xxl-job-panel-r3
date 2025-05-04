@@ -1,7 +1,7 @@
-import { useTheme } from '@/components/ThemeProvider.tsx'
+import { useTheme } from '@/components/common/ThemeProvider.tsx'
 import { Moon, Sun } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import { Button } from '@/components/ui/button.tsx'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip.tsx'
 import useZustandStore from '@/stores/useZustandStore.ts'
 
 export function ToggleTheme() {

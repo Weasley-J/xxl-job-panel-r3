@@ -2,11 +2,11 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 
 import Layout from '@/components/layout'
-import NotFound from '@/pages/NotFound'
 // import ProtectedRoute from '@/components/ProtectedRoute'
 import Dashboard from '@/pages/Dashboard'
 import LoginPage from '@/pages/login'
 import OverflowTest from '@/pages/extra/OverflowTest'
+import Error404 from '@/pages/error/Error404.tsx'
 
 // 所有路径统一管理
 const URIs = {
@@ -60,7 +60,7 @@ const AppRoutes: React.FC = () => {
       </Route>
 
       {/* 404 页面 */}
-      <Route path="*" element={<NotFound />} />
+      <Route path="*" element={<Error404 />} />
     </Routes>
   )
 }

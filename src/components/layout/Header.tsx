@@ -9,7 +9,7 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb.tsx'
 import { URIs } from '@/routes'
-import { ToggleTheme } from '@/components/ToggleTheme.tsx'
+import { ToggleTheme } from '@/components/common/ToggleTheme.tsx'
 import { SidebarTrigger } from '@/components/ui/sidebar.tsx'
 
 const Header: React.FC = () => {

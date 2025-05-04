@@ -5,6 +5,7 @@ import { SidebarFC } from '@/components/layout/SidebarFC.tsx'
 import Header from '@/components/layout/Header.tsx'
 import Footer from '@/components/layout/Footer.tsx'
 import Lazy from '@/components/Lazy.tsx'
+// import styles from '@/components/layout/index.module.less'
 
 const Layout: React.FC = () => {
   return (
