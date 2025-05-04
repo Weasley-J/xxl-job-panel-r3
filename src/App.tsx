@@ -1,6 +1,6 @@
 import '@/App.css'
 
-import { ThemeProvider } from '@/components/common/ThemeProvider.tsx'
+import { ThemeProvider } from '@/components/ThemeProvider.tsx'
 import { BrowserRouter } from 'react-router-dom'
 import { AppRoutes } from '@/routes'
 import { Toaster } from 'sonner'

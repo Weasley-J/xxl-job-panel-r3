@@ -18,7 +18,7 @@ const Layout: React.FC = () => {
           <Header />
           <main className="flex-1 overflow-auto px-4 py-2">
             <div className="bg-muted/40 border border-border rounded-lg p-4 h-full">
-              <Outlet context={<Lazy Component={lazy(() => import('@/pages/Dashboard'))} />} />
+              <Outlet context={<Lazy Component={lazy(() => import('@/pages/dashboard'))} />} />
             </div>
           </main>
           <Footer />

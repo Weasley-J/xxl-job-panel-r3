@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 
 import Layout from '@/components/layout'
-import Dashboard from '@/pages/Dashboard'
+import Dashboard from '@/pages/dashboard/index'
 import LoginPage from '@/pages/login'
 import OverflowTest from '@/pages/extra/OverflowTest'
 import Error404 from '@/pages/error/Error404.tsx'
@@ -15,7 +15,6 @@ const URIs = {
   login: '/login',
   dashboard: '/dashboard',
   overflow: '/overflow',
-  report: '/report',
   tasks: '/tasks',
   logs: '/logs',
   users: '/users',
@@ -26,7 +25,6 @@ const URIs = {
 
 // 页面组件封装（可以考虑拆到单独文件）
 const components = {
-  ReportComponent: () => <>ReportComponent</>,
   TaskManagerComponent: () => <>你好 TaskManagerComponent</>,
   LogViewerComponent: () => <>LogViewerComponent</>,
   ExecutorComponent: () => <>ExecutorComponent</>,
@@ -54,7 +52,6 @@ const AppRoutes: React.FC = () => {
         <Route index element={<Dashboard />} />
         <Route path={URIs.dashboard} element={<Dashboard />} />
         <Route path={URIs.overflow} element={<OverflowTest />} />
-        <Route path={URIs.report} element={<components.ReportComponent />} />
         <Route path={URIs.tasks} element={<components.TaskManagerComponent />} />
         <Route path={URIs.logs} element={<components.LogViewerComponent />} />
         <Route path={URIs.executors} element={<components.ExecutorComponent />} />

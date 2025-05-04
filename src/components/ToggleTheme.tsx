@@ -1,4 +1,4 @@
-import { useTheme } from '@/components/common/ThemeProvider.tsx'
+import { useTheme } from '@/components/ThemeProvider.tsx'
 import { Moon, Sun } from 'lucide-react'
 import { Button } from '@/components/ui/button.tsx'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip.tsx'

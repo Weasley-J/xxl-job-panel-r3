@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/sidebar'
 import useZustandStore from '@/stores/useZustandStore'
 import { log } from '@/common/Logger'
-import { NavSidebarGroupItem, NavyPrimary } from '@/components/common/NavyPrimary.tsx'
+import { NavSidebarGroupItem, NavyPrimary } from '@/components/layout/NavyPrimary.tsx'
 import { useNavigate } from 'react-router-dom'
 import { URIs } from '@/routes'
 import { navMainItems } from '@/config/menu.config.ts'
