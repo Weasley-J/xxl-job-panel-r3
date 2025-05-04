@@ -1,5 +1,6 @@
 /**
- * 在 App.tsx 中导入了 AntdGlobalProvider.ts 文件，并在 ConfigProvider 组件中使用了自定义主题, 入口处初始化 一次
+ * 在 App.tsx 中导入了 AntdGlobalProvider.ts 文件，并在 ConfigProvider 组件中使用了自定义主题.
+ * 入口处初始化一次
  * @file Antd global message, notification and modal
  */
 import { App } from 'antd'
