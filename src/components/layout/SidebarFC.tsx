@@ -73,8 +73,8 @@ export function SidebarFC({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <Clock className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="font-semibold">XXL-JOB</span>
-                  <span>v3.1.0</span>
+                  <span className="font-semibold">{import.meta.env.VITE_APP_NAME}</span>
+                  <span>{import.meta.env.VITE_APP_VERSION}</span>
                 </div>
               </a>
             </SidebarMenuButton>

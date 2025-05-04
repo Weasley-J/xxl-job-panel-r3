@@ -65,7 +65,7 @@ axiosClient.interceptors.response.use(
   error => {
     const { response } = error
     if (!response) {
-      alert('网络异常，请检查网络连接')
+      toast.error('网络异常，请检查网络连接')
       return Promise.reject(error)
     }
     return handleError(error.message, error)

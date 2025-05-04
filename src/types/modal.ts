@@ -8,7 +8,7 @@ export interface IModalProps {
    * 当前是否显示弹窗组件的 Ref 引用, 通过 useRef() 获取
    * @apiNote 发起弹窗请求的组件
    */
-  parentRef: React.MutableRefObject<ModalAction> | undefined
+  parentRef: React.RefObject<ModalAction> | undefined
   /**
    * 数据发生变化时接受父组件传递的回调函数
    */
@@ -37,7 +37,7 @@ export interface ModalAction {
 export type Action = 'create' | 'edit' | 'view'
 
 export const ModalVariables = {
-  width: 800,
+  width: 600,
   layout: {
     labelCol: { span: 8 },
     wrapperCol: { span: 16 },
