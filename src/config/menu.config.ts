@@ -1,5 +1,7 @@
 import { NavSidebarGroupItem } from '@/components/layout/NavyPrimary.tsx'
-import { BookOpenCheck, ListChecks, ServerCog, Users2 } from 'lucide-react'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
+import { BookOpenCheck, GaugeCircle, Home, LayoutDashboard, ListChecks, ServerCog, Users2 } from 'lucide-react'
 
 export interface MenuItem {
   name: string
@@ -29,6 +31,7 @@ const menuConfig: MenuItem[] = [
 ]
 
 const navMainItems: NavSidebarGroupItem[] = [
+  { title: '工作台', url: '/dashboard', icon: LayoutDashboard },
   { title: '任务管理', url: '/tasks', icon: ListChecks },
   { title: '调度日志', url: '/logs', icon: BookOpenCheck },
   { title: '执行器管理', url: '/executors', icon: ServerCog },

@@ -29,7 +29,7 @@ export function NavyPrimary({
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>工作台</SidebarGroupLabel>
+      <SidebarGroupLabel>系统管理</SidebarGroupLabel>
       <SidebarGroupContent className="px-1.5 md:px-0">
         <SidebarMenu>
           {items.map(item => (

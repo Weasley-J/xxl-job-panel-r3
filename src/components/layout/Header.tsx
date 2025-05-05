@@ -35,8 +35,9 @@ const Header: React.FC = () => {
               <BreadcrumbLink href={URIs.home}>首页</BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator className="hidden md:block" />
+            {/* todo Dynamically */}
             <BreadcrumbItem>
-              <BreadcrumbPage>任务管理</BreadcrumbPage>
+              <BreadcrumbPage>工作台</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
