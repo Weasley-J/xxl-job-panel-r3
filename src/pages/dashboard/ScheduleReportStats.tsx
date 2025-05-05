@@ -1,6 +1,6 @@
 import { CardHeader, CardTitle } from '@/components/ui/card.tsx'
 import useZustandStore from '@/stores/useZustandStore.ts'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 /**
  * 运行统计卡片
@@ -17,6 +17,16 @@ function ScheduleReportStats() {
     '--bg-light-3': isDarkEnable ? '#9044c0' : '#1c82ad',
     '--bg-light-4': isDarkEnable ? '#4c2cb7' : '#00327c',
   } as React.CSSProperties
+
+  async function getRunningOverview() {
+    // todo api get data
+    // const { content } = await api.dashboard.getRunningOverview()
+    // const { totalTask, scheduleNum, onlineActuator } = content
+  }
+
+  useEffect(() => {
+    getRunningOverview()
+  }, [])
 
   return (
     <div className="rounded-xl">

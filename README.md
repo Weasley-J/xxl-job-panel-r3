@@ -1,3 +1,3 @@
-# xxl-job-webpanel-r3
+# xxl-job-panel-r3
 
-xxl-job web panel React 3rd-party.
+A third-party React-based web admin panel for XXL-JOB.

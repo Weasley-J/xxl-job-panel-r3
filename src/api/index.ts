@@ -1,6 +1,6 @@
 import apiClient from '@/api/apiClient.ts'
 import { LoginParams } from '@/types/auth.ts'
-import { Result, User } from '@/types'
+import { ChartInfoParams, ChartInfoResponse, Result, TDashboardTaskStats, User } from '@/types'
 
 /**
  * API Request Entities Management
@@ -20,6 +20,14 @@ export default {
       return apiClient.post<User.UserPageListResponse>('/user/pageList', undefined, { params })
     },
   },
-
+  dashboard: {
+    getCartInfo(params: ChartInfoParams) {
+      return apiClient.post<ChartInfoResponse>('/chartInfo', undefined, { params })
+    },
+    getRunningOverview() {
+      // todo 实现接口
+      return apiClient.post<TDashboardTaskStats>('/chartRunningOverview')
+    },
+  },
   job: {},
 }

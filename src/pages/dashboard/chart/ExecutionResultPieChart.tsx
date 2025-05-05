@@ -5,9 +5,14 @@ import { LabelList, Pie, PieChart } from 'recharts'
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'
+import { format } from 'date-fns'
+import useZustandStore from '@/stores/useZustandStore.ts'
+import { isFalse } from '@/common/booleanUtils.ts'
+import { objectUtils } from '@/common/objectUtils.ts'
+import { getDiffInDays } from '@/utils'
 
-// 图表数据：状态与任务数
-const chartData = [
+// 模拟数据
+const mockChartData = [
   { status: 'success', tasks: 320, fill: 'var(--color-success)' },
   { status: 'failed', tasks: 180, fill: 'var(--color-failed)' },
   { status: 'retrying', tasks: 95, fill: 'var(--color-retrying)' },
@@ -15,7 +20,6 @@ const chartData = [
   { status: 'other', tasks: 30, fill: 'var(--color-other)' },
 ]
 
-// 图表配置：标签翻译及颜色
 const chartConfig = {
   tasks: {
     label: '任务数',
@@ -29,7 +33,7 @@ const chartConfig = {
     color: 'hsl(var(--chart-2))',
   },
   retrying: {
-    label: '重试中',
+    label: '进行中',
     color: 'hsl(var(--chart-3))',
   },
   terminated: {
@@ -42,12 +46,38 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function ExecutionResultChart() {
+export function ExecutionResultPieChart() {
+  const { chartData, chartTimeRange } = useZustandStore()
+  const { startDate, endDate } = chartTimeRange
+
+  const isMock = isFalse(objectUtils.hasData(chartData?.triggerDayList))
+
+  const days = (() => {
+    const diff = getDiffInDays(startDate, endDate)
+    return diff > 0 ? diff : 7
+  })()
+
+  const timeRangeLabel = (() => {
+    const end = new Date()
+    const start = new Date(end)
+    start.setDate(end.getDate() - days)
+    return `${format(start, 'yyyy年MM月')} - ${format(end, 'yyyy年MM月')}`
+  })()
+
+  function getDataFromApi() {
+    return [
+      { status: 'success', tasks: chartData.triggerCountSucTotal, fill: 'var(--color-success)' },
+      { status: 'failed', tasks: chartData.triggerCountFailTotal, fill: 'var(--color-failed)' },
+      { status: 'retrying', tasks: chartData.triggerCountRunningTotal, fill: 'var(--color-retrying)' },
+      { status: 'terminated', tasks: 1, fill: 'var(--color-terminated)' },
+    ]
+  }
+
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
         <CardTitle>任务状态分布</CardTitle>
-        <CardDescription>2024年1月至6月</CardDescription>
+        <CardDescription>{timeRangeLabel}</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
@@ -56,7 +86,7 @@ export function ExecutionResultChart() {
         >
           <PieChart>
             <ChartTooltip content={<ChartTooltipContent nameKey="tasks" hideLabel />} />
-            <Pie data={chartData} dataKey="tasks">
+            <Pie data={isMock ? mockChartData : getDataFromApi()} dataKey="tasks">
               <LabelList
                 dataKey="status"
                 className="fill-background"
@@ -72,7 +102,7 @@ export function ExecutionResultChart() {
         <div className="flex items-center gap-2 font-medium leading-none">
           本月上升了 5.2% <TrendingUp className="h-4 w-4" />
         </div>
-        <div className="leading-none text-muted-foreground">显示最近 6 个月的任务数量</div>
+        <div className="leading-none text-muted-foreground">显示最近 {days} 天的任务数量</div>
       </CardFooter>
     </Card>
   )

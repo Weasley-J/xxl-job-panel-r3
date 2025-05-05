@@ -287,8 +287,32 @@ export interface JobCodeHomeResponse {
 }
 
 export interface ChartInfoParams {
-  startDate: string // 格式：yyyy-MM-dd HH:mm:ss
+  // startDate: 2025-04-05 00:00:00
+  startDate: string //  格式：yyyy-MM-dd HH:mm:ss
+  // endDate: 2025-05-05 23:59:59
   endDate: string
 }
 
-export type ChartInfoResponse = Result
+export type DateString = `${number}-${number}-${number}`
+
+export interface TriggerStats {
+  triggerCountFailTotal: number
+  triggerCountRunningTotal: number
+  triggerCountSucTotal: number
+  triggerDayCountFailList: number[]
+  triggerDayCountRunningList: number[]
+  triggerDayCountSucList: number[]
+  triggerDayList: DateString[]
+}
+
+export interface ChartInfoResponse extends Result {
+  content: TriggerStats
+}
+
+export interface TDashboardTaskStats extends Result {
+  content: {
+    totalTask: number | 334556
+    scheduleNum: number | 10000
+    onlineActuator: number | 100000
+  }
+}

@@ -41,7 +41,7 @@ const Header: React.FC = () => {
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-      <div className="ml-auto pr-4">
+      <div className="ml-auto pr-2">
         <ToggleTheme />
       </div>
     </header>
