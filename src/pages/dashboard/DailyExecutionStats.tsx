@@ -12,6 +12,7 @@ import useZustandStore from '@/stores/useZustandStore.ts'
  * @constructor
  */
 export function DailyExecutionStats() {
+
   const { setChartData } = useZustandStore()
 
   // 获取最近30天的起止时间
@@ -45,6 +46,7 @@ export function DailyExecutionStats() {
           <ExecutionResultPieChart />
         </div>
       </div>
+
     </div>
   )
 }
