@@ -26,6 +26,11 @@ export default defineConfig(({ mode }) => {
           changeOrigin: true,
           rewrite: path => path.replace(/^\/job/, '/job'),
         },
+        '/api': {
+          target: env.VITE_PROXY_TARGET,
+          changeOrigin: true,
+          rewrite: path => path.replace(/^\/api/, '/api'),
+        },
       },
     },
 

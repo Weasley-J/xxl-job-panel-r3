@@ -3,6 +3,7 @@ import { DailyExecutionLineChart } from '@/pages/dashboard/chart/DailyExecutionL
 import { ExecutionResultPieChart } from '@/pages/dashboard/chart/ExecutionResultPieChart.tsx'
 import api from '@/api'
 import { useEffect } from 'react'
+import dayjs from 'dayjs'
 import { ChartInfoParams } from '@/types'
 import useZustandStore from '@/stores/useZustandStore.ts'
 
@@ -13,10 +14,10 @@ import useZustandStore from '@/stores/useZustandStore.ts'
 export function DailyExecutionStats() {
   const { setChartData } = useZustandStore()
 
-  const params = {
-    startDate: '2025-02-05 00:00:00',
-    endDate: '2025-05-05 23:59:59',
-  }
+  // 获取最近30天的起止时间
+  const endDate = dayjs().endOf('day').format('YYYY-MM-DD HH:mm:ss')
+  const startDate = dayjs().subtract(29, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss')
+  const params = { startDate, endDate }
 
   // 异步获取图表数据
   const getCartInfo = async (params: ChartInfoParams) => {

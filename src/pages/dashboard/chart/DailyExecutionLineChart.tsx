@@ -139,7 +139,7 @@ export function DailyExecutionLineChart() {
   const { chartData, setChartData } = useZustandStore()
   const { setChartTimeRange } = useZustandStore()
 
-  const [timeRange, setTimeRange] = React.useState('7d')
+  const [timeRange, setTimeRange] = React.useState('30d')
   const isMock = isFalse(objectUtils.hasData(chartData?.triggerDayList))
 
   function getFilteredMockData() {
@@ -150,6 +150,8 @@ export function DailyExecutionLineChart() {
       if (timeRange === '30d') {
         daysToSubtract = 30
       } else if (timeRange === '7d') {
+        daysToSubtract = 7
+      } else if (timeRange === '180d') {
         daysToSubtract = 7
       }
       const startDate = new Date(referenceDate)
@@ -175,7 +177,10 @@ export function DailyExecutionLineChart() {
     const rangeMap: Record<string, number> = {
       '7d': 7,
       '30d': 30,
+      '60d': 60,
       '90d': 90,
+      '180d': 180,
+      '365d': 365,
     }
     const daysToSubtract = rangeMap[timeRange] ?? 90
     const startDate = new Date(referenceDate)
@@ -196,7 +201,7 @@ export function DailyExecutionLineChart() {
       <CardHeader className="flex items-center gap-2 space-y-0 border-b py-5 sm:flex-row">
         <div className="grid flex-1 gap-1 text-center sm:text-left">
           <CardTitle>每日任务执行趋势</CardTitle>
-          <CardDescription>展示最近 3 个月每日任务执行情况</CardDescription>
+          <CardDescription>展示最近 1 年内每日任务执行情况</CardDescription>
         </div>
         <Select value={timeRange} onValueChange={handleTimeRangeChange}>
           <SelectTrigger className="w-[160px] rounded-lg sm:ml-auto" aria-label="选择时间范围">
@@ -209,8 +214,17 @@ export function DailyExecutionLineChart() {
             <SelectItem value="30d" className="rounded-lg">
               最近 30 天
             </SelectItem>
+            <SelectItem value="60d" className="rounded-lg">
+              最近 60 天
+            </SelectItem>
             <SelectItem value="90d" className="rounded-lg">
               最近 90 天
+            </SelectItem>
+            <SelectItem value="180d" className="rounded-lg">
+              最近 6 个月
+            </SelectItem>
+            <SelectItem value="365d" className="rounded-lg">
+              最近 1 整年
             </SelectItem>
           </SelectContent>
         </Select>

@@ -12,7 +12,7 @@ import { objectUtils } from '@/common/objectUtils.ts'
  * Basic config
  */
 const axiosClient: AxiosInstance = axios.create({
-  baseURL: '/job',
+  baseURL: import.meta.env.VITE_API_BASE_URL,
   timeout: 10000,
   timeoutErrorMessage: '请求超时，请稍后再试',
   withCredentials: true,
