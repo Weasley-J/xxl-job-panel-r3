@@ -311,8 +311,9 @@ export interface ChartInfoResponse extends Result {
 
 export interface TDashboardTaskStats extends Result {
   content: {
-    totalTask: number | 334556
-    scheduleNum: number | 10000
-    onlineActuator: number | 100000
+    jobInfoCount: number | 0
+    jobLogCount: number | 0
+    executorCount: number | 0
+    jobLogSuccessCount: number | 0
   }
 }

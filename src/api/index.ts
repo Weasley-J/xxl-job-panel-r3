@@ -24,9 +24,8 @@ export default {
     getCartInfo(params: ChartInfoParams) {
       return apiClient.post<ChartInfoResponse>('/chartInfo', undefined, { params })
     },
-    getRunningOverview() {
-      // todo 实现接口
-      return apiClient.post<TDashboardTaskStats>('/chartRunningOverview')
+    getJobRunningOverview() {
+      return apiClient.get<TDashboardTaskStats>('/r3/v1/job/report/overview')
     },
   },
   job: {},
