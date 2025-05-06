@@ -73,7 +73,7 @@ export const EChartsManager = {
     myRefreshButton: {
       show: true,
       title: '刷新数据',
-      icon: 'image://images/action_refresh_btn.png',
+      icon: 'image://assets/action_refresh_btn.png',
       onclick: onRefreshCallback,
     },
   }),
