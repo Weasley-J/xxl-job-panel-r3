@@ -1,5 +1,5 @@
-import ScheduleReportStats from '@/pages/dashboard/ScheduleReportStats.tsx'
-import { DailyExecutionStats } from './DailyExecutionStats'
+import ScheduleReportStats from '@/pages/dashboard/children/ScheduleReportStats.tsx'
+import { DailyExecutionStats } from '@/pages/dashboard/children/DailyExecutionStats.tsx'
 
 function Dashboard() {
   return (

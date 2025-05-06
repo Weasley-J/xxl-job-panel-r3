@@ -75,7 +75,7 @@ export function ExecutionResultPieChart() {
 
   return (
     <Card className="flex flex-col">
-      <CardHeader className="items-center pb-0">
+      <CardHeader className="items-center pb-0 text-center">
         <CardTitle>任务状态分布</CardTitle>
         <CardDescription>{timeRangeLabel}</CardDescription>
       </CardHeader>
