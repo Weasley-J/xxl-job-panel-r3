@@ -11,7 +11,7 @@ import useZustandStore from '@/stores/useZustandStore.ts'
  * 调度统计卡片
  * @constructor
  */
-export function DailyExecutionStats() {
+function DailyExecutionStats() {
   const { setChartData } = useZustandStore()
 
   // 获取最近30天的起止时间
@@ -32,12 +32,12 @@ export function DailyExecutionStats() {
 
   return (
     <div className="rounded-xl w-full">
-      <CardHeader className="flex items-center justify-between py-4 sm:flex-row">
+      <CardHeader className="flex items-center justify-between sm:flex-row">
         <div className="text-center sm:text-left">
           <CardTitle className="text-2xl font-semibold">调度统计</CardTitle>
         </div>
       </CardHeader>
-      <div className="flex gap-6 flex-col sm:flex-row pb-4">
+      <div className="flex gap-6 flex-col sm:flex-row mt-2">
         <div className="w-full sm:w-2/3">
           <DailyExecutionLineChart />
         </div>
@@ -48,3 +48,5 @@ export function DailyExecutionStats() {
     </div>
   )
 }
+
+export default DailyExecutionStats

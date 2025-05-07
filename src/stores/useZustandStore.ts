@@ -41,13 +41,13 @@ const useZustandStore = create<{
   setUserInfo: (userInfo: User.Info) => {
     set(() => ({ userInfo }))
     storage.set('user-info', userInfo)
-    logUpdate(userInfo)
+    logStateUpdate(userInfo)
   },
   setCollapsed: () => {
     set(state => {
       const newValue = !state.collapsed
       storage.set('collapsed', newValue) // ✅ 保存新值
-      logUpdate(newValue)
+      logStateUpdate(newValue)
       return { collapsed: newValue }
     })
   },
@@ -55,27 +55,45 @@ const useZustandStore = create<{
     set(state => {
       const nextIsDark = !state.isDarkEnable
       storage.set('enableDark', nextIsDark)
-      logUpdate(nextIsDark)
+      logStateUpdate(nextIsDark)
       return { isDarkEnable: nextIsDark }
     })
   },
   setActiveTab: (activeTab: string) => {
-    logUpdate(activeTab)
+    logStateUpdate(activeTab)
     storage.set('activeTab', activeTab)
     set(() => ({ activeTab }))
   },
   setChartData: (chartData: TriggerStats) => {
-    logUpdate(chartData)
+    logStateUpdate(chartData)
     set(() => ({ chartData }))
   },
   setChartTimeRange(chartTimeRange: { startDate: string; endDate: string }) {
-    logUpdate(chartTimeRange)
+    logStateUpdate(chartTimeRange)
     set(() => ({ chartTimeRange }))
   },
 }))
 
-function logUpdate(data: any) {
-  if (isDebugEnable) log.debug('Zustand meta data update:', data)
+function logStateUpdate(data: unknown, key?: any) {
+  if (!isDebugEnable) return
+  if (arguments.length === 1) {
+    log.debug('[Zustand] State Update (batch)', {
+      updates: data,
+      timestamp: new Date().toISOString(),
+      source: 'zustandStore',
+    })
+    return
+  }
+  if (typeof key === 'string' && arguments.length === 2) {
+    log.debug('[Zustand] State Update', {
+      key,
+      value: data,
+      timestamp: new Date().toISOString(),
+      source: 'zustandStore',
+    })
+    return
+  }
+  log.warn('[Zustand] Invalid state update log format', { key, data })
 }
 
 export default useZustandStore

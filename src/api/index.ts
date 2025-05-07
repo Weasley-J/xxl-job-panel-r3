@@ -25,7 +25,7 @@ export default {
       return apiClient.post<ChartInfoResponse>('/chartInfo', undefined, { params })
     },
     getJobRunningOverview() {
-      return apiClient.get<TDashboardTaskStats>('/r3/v1/job/report/overview')
+      return apiClient.get<TDashboardTaskStats>('/r3/support/v1/job/report/overview')
     },
   },
   job: {},
