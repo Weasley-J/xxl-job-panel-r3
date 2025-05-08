@@ -38,10 +38,10 @@ function DailyExecutionStats() {
         </div>
       </CardHeader>
       <div className="flex gap-6 flex-col sm:flex-row mt-4">
-        <div className="w-full sm:w-7/10">
+        <div className="w-full sm:w-2/3">
           <DailyExecutionLineChart />
         </div>
-        <div className="w-full sm:w-3/10">
+        <div className="w-full sm:w-1/3">
           <ExecutionResultPieChart />
         </div>
       </div>
