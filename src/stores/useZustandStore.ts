@@ -46,7 +46,7 @@ const useZustandStore = create<{
   setCollapsed: () => {
     set(state => {
       const newValue = !state.collapsed
-      storage.set('collapsed', newValue) // ✅ 保存新值
+      storage.set('collapsed', newValue)
       logStateUpdate(newValue)
       return { collapsed: newValue }
     })
