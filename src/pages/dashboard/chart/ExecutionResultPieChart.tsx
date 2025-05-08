@@ -53,7 +53,7 @@ export function ExecutionResultPieChart() {
 
   const days = (() => {
     const diff = getDiffInDays(startDate, endDate)
-    return diff > 0 ? diff : 7
+    return diff > 0 ? diff : 30
   })()
 
   const timeRangeLabel = (() => {
@@ -74,7 +74,7 @@ export function ExecutionResultPieChart() {
 
   return (
     <Card className="flex flex-col">
-      <CardHeader className="items-center pb-0 text-center">
+      <CardHeader className="items-center">
         <CardTitle>任务状态分布</CardTitle>
         <CardDescription>{timeRangeLabel}</CardDescription>
       </CardHeader>
@@ -97,7 +97,26 @@ export function ExecutionResultPieChart() {
           </PieChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col gap-2 text-sm">
+      <CardFooter className="flex flex-col gap-2 text-sm">
+        {/* 自定义图例区域 */}
+        <div className="flex items-center justify-center gap-3">
+          {/* 成功 */}
+          <div className="flex items-center gap-1">
+            <span className="inline-block h-3 w-3 rounded-full bg-[var(--color-success)]" />
+            <span className="text-xs text-muted-foreground">成功</span>
+          </div>
+          {/* 进行中 */}
+          <div className="flex items-center gap-1">
+            <span className="inline-block h-3 w-3 rounded-full bg-[var(--color-retrying)]" />
+            <span className="text-xs text-muted-foreground">进行中</span>
+          </div>
+          {/* 失败 */}
+          <div className="flex items-center gap-1">
+            <span className="inline-block h-3 w-3 rounded-full bg-[var(--color-failed)]" />
+            <span className="text-xs text-muted-foreground">失败</span>
+          </div>
+        </div>
+        {/* 其他说明 */}
         <div className="leading-none text-muted-foreground">显示最近 {days} 天的任务数量</div>
       </CardFooter>
     </Card>

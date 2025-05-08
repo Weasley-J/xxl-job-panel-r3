@@ -27,13 +27,13 @@ function ScheduleReportStats() {
 
   return (
     <div className="rounded-xl">
-      <CardHeader className="flex items-center justify-between sm:flex-row">
+      <CardHeader className="flex items-center justify-between sm:flex-row py-1">
         <div className="text-center sm:text-left">
           <CardTitle className="text-2xl font-semibold">运行概览</CardTitle>
         </div>
       </CardHeader>
 
-      <div style={cardStyle} className="grid gap-6 md:grid-cols-4 py-4 mt-4">
+      <div style={cardStyle} className="grid gap-6 md:grid-cols-4 py-4">
         {/* 使用 StatCard 组件来渲染每个卡片 */}
         <StatCard
           icon="📊"

@@ -10,7 +10,7 @@ type StatCardProps = {
 
 const StatCard: React.FC<StatCardProps> = ({ icon, title, value, backgroundColor }) => {
   return (
-    <div style={{ backgroundColor }} className="aspect-video rounded-xl text-white px-6 py-4 border flex items-center">
+    <div style={{ backgroundColor }} className="aspect-video rounded-xl text-white px-6 py-2 border flex items-center">
       <div className="flex w-full">
         <div className="w-1/4 text-5xl flex items-center justify-center mr-2">{icon}</div>
         <div className="w-3/4 flex flex-col justify-center items-start text-left">

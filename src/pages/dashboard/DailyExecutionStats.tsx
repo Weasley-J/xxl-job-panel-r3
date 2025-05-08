@@ -32,16 +32,16 @@ function DailyExecutionStats() {
 
   return (
     <div className="rounded-xl w-full">
-      <CardHeader className="flex items-center justify-between sm:flex-row">
+      <CardHeader className="flex items-center justify-between sm:flex-row py-1">
         <div className="text-center sm:text-left">
           <CardTitle className="text-2xl font-semibold">调度统计</CardTitle>
         </div>
       </CardHeader>
-      <div className="flex gap-6 flex-col sm:flex-row mt-2">
-        <div className="w-full sm:w-2/3">
+      <div className="flex gap-6 flex-col sm:flex-row mt-4">
+        <div className="w-full sm:w-7/10">
           <DailyExecutionLineChart />
         </div>
-        <div className="w-full sm:w-1/3">
+        <div className="w-full sm:w-3/10">
           <ExecutionResultPieChart />
         </div>
       </div>

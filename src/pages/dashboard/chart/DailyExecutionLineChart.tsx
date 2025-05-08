@@ -162,13 +162,12 @@ export function DailyExecutionLineChart() {
 
   function getChartDataFromApi(apiData: TriggerStats) {
     const { triggerDayList, triggerDayCountSucList, triggerDayCountRunningList, triggerDayCountFailList } = apiData
-    const chartData = triggerDayList.map((date: string, index: number) => ({
+    return triggerDayList.map((date: string, index: number) => ({
       date,
       success: triggerDayCountSucList?.[index] ?? 0,
       running: triggerDayCountRunningList?.[index] ?? 0,
       failure: triggerDayCountFailList?.[index] ?? 0,
     }))
-    return chartData
   }
 
   async function handleTimeRangeChange(timeRange: any) {
@@ -198,7 +197,7 @@ export function DailyExecutionLineChart() {
 
   return (
     <Card className="flex">
-      <CardHeader className="flex items-center gap-2 space-y-0 border-b py-4 sm:flex-row">
+      <CardHeader className="flex items-center gap-2 space-y-0 border-b py-2 sm:flex-row">
         <div className="grid flex-1 gap-1 text-center sm:text-left">
           <CardTitle>每日任务执行趋势</CardTitle>
           <CardDescription>展示最近 1 年内每日任务执行情况</CardDescription>

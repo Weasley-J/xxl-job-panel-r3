@@ -5,7 +5,7 @@ import Layout from '@/components/layout'
 import Dashboard from '@/pages/dashboard/index'
 import LoginPage from '@/pages/login'
 import OverflowTest from '@/pages/extra/OverflowTest'
-import Error404 from '@/pages/error/Error404.tsx'
+import NotFound from '@/pages/error/NotFound.tsx'
 import { isFalse } from '@/common/booleanUtils'
 import ProtectedRoute from '@/routes/ProtectedRoute.tsx'
 
@@ -58,7 +58,7 @@ const AppRoutes: React.FC = () => {
         <Route path={URIs.users} element={<components.UserComponent />} />
       </Route>
 
-      <Route path="*" element={<Error404 />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   )
 }

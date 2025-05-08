@@ -58,6 +58,11 @@
   --chart-3: 197 37% 24%;
   --chart-4: 43 74% 66%;
   --chart-5: 27 87% 67%;
+  --color-failed: hsl(var(--chart-2));
+  --color-other: hsl(var(--chart-5));
+  --color-retrying: hsl(var(--chart-3));
+  --color-success: hsl(var(--chart-1));
+  --color-terminated: hsl(var(--chart-4));
   --destructive: oklch(0.577 0.245 27.325);
   --foreground: oklch(0.145 0 0);
   --input: oklch(0.922 0 0);
