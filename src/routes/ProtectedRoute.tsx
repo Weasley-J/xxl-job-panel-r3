@@ -5,7 +5,7 @@ import useZustandStore from '@/stores/useZustandStore.ts'
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { userInfo } = useZustandStore()
-  const isAuthenticated = (userInfo?.username === storage.get('token')) && !!storage.get('token')
+  const isAuthenticated = userInfo?.username === storage.get('token') && !!storage.get('token')
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />
   }

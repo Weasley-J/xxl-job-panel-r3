@@ -53,7 +53,7 @@ export default function UserComponent() {
   // 拉取数据
   const fetchTableData = async (
     { current, pageSize }: { current: number; pageSize: number },
-    formData: User.UserPageQuery,
+    formData: User.UserPageQuery
   ) => {
     const res = await api.user.getUserList({ ...formData, start: current - 1, length: pageSize })
     return {
@@ -102,7 +102,7 @@ export default function UserComponent() {
         },
       })
     },
-    [confirm, handleReset],
+    [confirm, handleReset]
   )
 
   const handleUserDelete = (id: number) => {
@@ -145,15 +145,16 @@ export default function UserComponent() {
         ),
       },
     ],
-    [handleEdit],
+    [handleEdit]
   )
 
   const searchFields = useMemo<SearchField[]>(
     () => [
-      { type: 'input', key: 'username', placeholder: '请输入账号搜索' },
+      { type: 'input', key: 'username', label: '账号', placeholder: '请输入账号搜索' },
       {
         type: 'select',
         key: 'role',
+        label: '角色',
         placeholder: '请选择角色',
         options: [
           { label: '全部', value: -1 },
@@ -162,7 +163,7 @@ export default function UserComponent() {
         ],
       },
     ],
-    [],
+    []
   )
 
   return (
