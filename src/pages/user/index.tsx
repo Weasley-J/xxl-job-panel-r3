@@ -53,7 +53,7 @@ export default function UserComponent() {
   // 拉取数据
   const fetchTableData = async (
     { current, pageSize }: { current: number; pageSize: number },
-    formData: User.UserPageQuery
+    formData: User.UserPageQuery,
   ) => {
     const res = await api.user.getUserList({ ...formData, start: current - 1, length: pageSize })
     return {
@@ -102,11 +102,11 @@ export default function UserComponent() {
         },
       })
     },
-    [confirm, handleReset]
+    [confirm, handleReset],
   )
 
   const handleUserDelete = (id: number) => {
-    confirmDelete([id], '删除操作不可撤销，是否继续？')
+    confirmDelete([id], `删除操作不可撤销，是否继续？ID: ${id}.`)
   }
 
   const handleBatchDelete = () => {
@@ -145,7 +145,7 @@ export default function UserComponent() {
         ),
       },
     ],
-    [handleEdit]
+    [handleEdit],
   )
 
   const searchFields = useMemo<SearchField[]>(
@@ -162,7 +162,7 @@ export default function UserComponent() {
         ],
       },
     ],
-    []
+    [],
   )
 
   return (
