@@ -113,6 +113,13 @@ const apiClient = {
       Authorization: `Bearer ${storage.get<string>('token')}`,
     }
   },
+  generateFormHeaders: function () {
+    return {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    }
+  },
 }
 
 export default apiClient

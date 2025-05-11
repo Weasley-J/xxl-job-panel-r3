@@ -24,7 +24,7 @@ export interface ModalAction {
    * @param action 操作行为
    * @param data 编辑或新增的数据，用于编辑时传递，显示
    */
-  openModal: (action: Action, data?: any) => void
+  openModal: (action: IAction, data?: any) => void
   /**
    * 关闭弹窗: 子组件里面必须实现该方法
    */
@@ -34,10 +34,10 @@ export interface ModalAction {
 /**
  * 弹窗组件的操作行为
  */
-export type Action = 'create' | 'edit' | 'view'
+export type IAction = 'create' | 'edit' | 'view'
 
 export const ModalVariables = {
-  width: 600,
+  width: 500,
   layout: {
     labelCol: { span: 8 },
     wrapperCol: { span: 16 },

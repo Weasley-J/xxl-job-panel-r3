@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button.tsx'
 import { PlusIcon } from '@radix-ui/react-icons'
 import { DeleteIcon } from 'lucide-react'
-import { Space, Table, Tooltip } from 'antd'
+import { Space, Table } from 'antd'
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import { useAntdTable } from 'ahooks'
 import { useForm } from 'antd/es/form/Form'
@@ -15,7 +15,7 @@ import { SearchBar, SearchField } from '@/components/common/SearchBar.tsx'
 import UserModal from '@/pages/user/UserModal.tsx'
 import { useConfirmDialog } from '@/hooks/useConfirmDialog.tsx'
 import { User } from '@/types'
-import { Action, ModalAction } from '@/types/modal.ts'
+import { IAction, ModalAction } from '@/types/modal.ts'
 import { ColumnsType } from 'antd/es/table'
 
 const INIT_VALUES: User.UserPageQuery = {
@@ -29,7 +29,7 @@ const INIT_VALUES: User.UserPageQuery = {
 export default function UserComponent() {
   const [form] = useForm<User.UserPageQuery>()
   const [userIds, setUserIds] = useState<number[]>([])
-  const [action, setAction] = useState<Action>('create')
+  const [action, setAction] = useState<IAction>('create')
   const { confirm, dialog } = useConfirmDialog()
 
   const currentRef = useRef<ModalAction>({
@@ -41,14 +41,7 @@ export default function UserComponent() {
 
   useEffect(() => {
     form.setFieldsValue(INIT_VALUES)
-    getUserGroupPermissions()
   }, [form])
-
-  const getUserGroupPermissions = async () => {
-    const { content } = await api.user.getUserGroupPermissions()
-    log.info('用户组权限:', content)
-    return content
-  }
 
   // 拉取数据
   const fetchTableData = async (
@@ -81,7 +74,6 @@ export default function UserComponent() {
   }, [form, search])
 
   const handleEdit = useCallback((record: User.UserRecord) => {
-    toast.success(`编辑用户 ${record.username}`)
     currentRef.current?.openModal('edit', record)
   }, [])
 
@@ -131,21 +123,19 @@ export default function UserComponent() {
         key: 'operate',
         render: (record: User.UserRecord) => (
           <Space>
-            <Tooltip title="编辑">
-              <Button size="sm" variant="outline" onClick={() => handleEdit(record)}>
-                <EditOutlined />
-              </Button>
-            </Tooltip>
-            <Tooltip title="删除">
-              <Button size="sm" variant="ghost" onClick={() => handleUserDelete(record.id)}>
-                <DeleteOutlined />
-              </Button>
-            </Tooltip>
+            <Button size="sm" variant="outline" onClick={() => handleEdit(record)}>
+              <EditOutlined />
+              编辑
+            </Button>
+            <Button size="sm" variant="ghost" onClick={() => handleUserDelete(record.id)}>
+              <DeleteOutlined />
+              删除
+            </Button>
           </Space>
         ),
       },
     ],
-    [handleEdit]
+    [handleEdit, handleUserDelete]
   )
 
   const searchFields = useMemo<SearchField[]>(

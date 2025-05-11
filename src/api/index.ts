@@ -23,7 +23,13 @@ export default {
       return apiClient.get<Job.JobGroupInfoPermissions>('/r3/support/v1/user/group/permissions', undefined, {})
     },
     deleteUser(params: { id: number }) {
-      return apiClient.post<Result>('/user/remove', undefined, { params }) // 👈 params 会被自动拼到 URL 上
+      return apiClient.post<Result>('/user/remove', undefined, { params })
+    },
+    editUser(params: User.UserRecord) {
+      return apiClient.post<Result>('/user/update', params, { ...apiClient.generateFormHeaders() })
+    },
+    createUser(params: User.UserRecord) {
+      return apiClient.post<Result>('/user/add', params, { ...apiClient.generateFormHeaders() })
     },
   },
   dashboard: {

@@ -38,7 +38,7 @@ export namespace User {
     username: string
     password?: string | null
     role: number // 0: 普通用户, 1: 管理员
-    permission?: string | null
+    permission?: string | number[] | string[] | null
   }
 
   export interface EditPwdParams {

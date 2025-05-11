@@ -15,8 +15,8 @@ interface ShadModalProps<T = any> {
   loading?: boolean
   footer?: React.ReactNode | null
   className?: string
-  destroyOnClose?: boolean
-  children: (data?: T) => React.ReactNode // 支持通过 render props 使用 data
+  destroyOnHidden?: boolean
+  children: (data?: T) => React.ReactNode
 }
 
 export function ShadcnAntdModal<T = any>({
@@ -27,11 +27,11 @@ export function ShadcnAntdModal<T = any>({
   onOk,
   okText = '确认',
   cancelText = '取消',
-  width = 520,
+  width = 720,
   loading = false,
   footer,
   className,
-  destroyOnClose = true,
+  destroyOnHidden = true,
   children,
 }: ShadModalProps<T>) {
   return (
@@ -54,10 +54,10 @@ export function ShadcnAntdModal<T = any>({
           </div>
         )
       }
-      confirmLoading={false} // 禁用默认 loading，交由 Button 控制
+      confirmLoading={false}
       width={width}
       className={clsx('antd-shadcn-modal', 'rounded-md', 'dark:bg-neutral-900', className)}
-      destroyOnHidden={destroyOnClose}
+      destroyOnHidden={destroyOnHidden}
     >
       <div className="px-6 pt-4">{children?.(data)}</div>
     </Modal>
