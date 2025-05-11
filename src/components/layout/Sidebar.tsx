@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Clock } from 'lucide-react'
 
-import { NavUser } from '@/pages/user/NavUser.tsx'
+import { NavUser } from '@/components/layout/NavUser.tsx'
 
 import {
   Sidebar as ShadUISidebar,

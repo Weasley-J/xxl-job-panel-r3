@@ -9,6 +9,7 @@ import storage from '@/utils/storage.ts'
 import { toast } from 'sonner'
 import { log } from '@/common/Logger.ts'
 import useZustandStore from '@/stores/useZustandStore.ts'
+import { LogInIcon } from 'lucide-react'
 
 export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<'form'>) {
   const { setUserInfo } = useZustandStore()
@@ -79,6 +80,7 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
           </label>
         </div>
         <Button type="submit" className="w-full" disabled={loading}>
+          <LogInIcon />
           登录
         </Button>
         <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">

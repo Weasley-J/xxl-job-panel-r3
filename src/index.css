@@ -139,6 +139,11 @@
   .ant-form-item-label > label {
     @apply font-medium text-sm;
   }
+
+  .ant-picker,
+  .ant-select-selector {
+    @apply border border-input rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring;
+  }
 }
 
 /* 针对 Ant Design 样式优化 */

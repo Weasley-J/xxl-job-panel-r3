@@ -12,12 +12,21 @@ import { URIs } from '@/routes'
 import { ToggleTheme } from '@/components/ToggleTheme.tsx'
 import { SidebarTrigger } from '@/components/ui/sidebar.tsx'
 import useZustandStore from '@/stores/useZustandStore.ts'
+import classNames from 'classnames'
 
-const Header: React.FC = () => {
+type HeaderProps = React.HTMLAttributes<HTMLElement>
+
+const Header: React.FC<HeaderProps> = ({ className, ...props }) => {
   const { setCollapsed } = useZustandStore()
 
   return (
-    <header className="flex h-10 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+    <header
+      className={classNames(
+        'flex h-10 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12',
+        className
+      )}
+      {...props}
+    >
       <div className="flex items-center gap-2 px-4 flex-grow">
         <SidebarTrigger
           className="-ml-1"
@@ -35,7 +44,6 @@ const Header: React.FC = () => {
               <BreadcrumbLink href={URIs.home}>首页</BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator className="hidden md:block" />
-            {/* todo Dynamically */}
             <BreadcrumbItem>
               <BreadcrumbPage>工作台</BreadcrumbPage>
             </BreadcrumbItem>

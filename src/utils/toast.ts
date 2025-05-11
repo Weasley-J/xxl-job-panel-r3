@@ -1,7 +1,7 @@
 import { toast as sonnerToast } from 'sonner'
 import { message as antdMsg } from '@/common/AntdProvider.ts'
 
-export const toast = {
+const toast = {
   success: (msg: string, useAntd?: boolean) => {
     if (useAntd) {
       antdMsg.success(msg)
@@ -16,4 +16,13 @@ export const toast = {
       sonnerToast.error(msg)
     }
   },
+  warning(msg: string, useAntd?: boolean) {
+    if (useAntd) {
+      antdMsg.warning(msg)
+    } else {
+      sonnerToast.error(msg)
+    }
+  },
 }
+
+export { toast }

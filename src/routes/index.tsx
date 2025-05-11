@@ -8,6 +8,10 @@ import OverflowTest from '@/pages/extra/OverflowTest'
 import NotFound from '@/pages/error/NotFound.tsx'
 import { isFalse } from '@/common/booleanUtils'
 import ProtectedRoute from '@/routes/ProtectedRoute.tsx'
+import UserComponent from '@/pages/user'
+import ExecutorComponent from '@/pages/executor'
+import TaskManagerComponent from '@/pages/task'
+import LogViewerComponent from '@/pages/logger'
 
 // 所有路径统一管理
 const URIs = {
@@ -21,14 +25,6 @@ const URIs = {
   executors: '/executors',
   notFound: '/404',
   noPermission: '/403',
-}
-
-// 页面组件封装（可以考虑拆到单独文件）
-const components = {
-  TaskManagerComponent: () => <>你好 TaskManagerComponent</>,
-  LogViewerComponent: () => <>LogViewerComponent</>,
-  ExecutorComponent: () => <>ExecutorComponent</>,
-  UserComponent: () => <>UserComponent</>,
 }
 
 // 路由配置
@@ -52,10 +48,10 @@ const AppRoutes: React.FC = () => {
         <Route index element={<Dashboard />} />
         <Route path={URIs.dashboard} element={<Dashboard />} />
         <Route path={URIs.overflow} element={<OverflowTest />} />
-        <Route path={URIs.tasks} element={<components.TaskManagerComponent />} />
-        <Route path={URIs.logs} element={<components.LogViewerComponent />} />
-        <Route path={URIs.executors} element={<components.ExecutorComponent />} />
-        <Route path={URIs.users} element={<components.UserComponent />} />
+        <Route path={URIs.tasks} element={<TaskManagerComponent />} />
+        <Route path={URIs.logs} element={<LogViewerComponent />} />
+        <Route path={URIs.executors} element={<ExecutorComponent />} />
+        <Route path={URIs.users} element={<UserComponent />} />
       </Route>
 
       <Route path="*" element={<NotFound />} />
@@ -64,4 +60,4 @@ const AppRoutes: React.FC = () => {
 }
 
 // 导出组件与路径配置
-export { URIs, AppRoutes, components as PageComponents }
+export { URIs, AppRoutes }

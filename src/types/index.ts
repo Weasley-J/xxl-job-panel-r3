@@ -27,8 +27,8 @@ export namespace User {
   export interface UserPageQuery {
     start?: number // 分页起始位置，默认 0
     length?: number // 分页长度，默认 10
-    username?: string // 用户名，必填
-    role?: number // 用户角色，可选：0 = 普通用户，1 = 管理员
+    username?: string | '' // 用户名，必填
+    role?: number | '-1' // 用户角色，可选：0 = 普通用户，1 = 管理员
   }
 
   export type UserPageListResponse = PageResult<UserRecord>
@@ -104,6 +104,10 @@ export namespace Job {
     registryList?: string[] // 可由 addressList 派生
   }
 
+  export interface JobGroupInfoPermissions extends Result {
+    content: JobGroupInfo[]
+  }
+
   export function getRegistryList(info: JobGroupInfo): string[] {
     return info.addressList?.trim() ? info.addressList.split(',') : []
   }
@@ -122,8 +126,8 @@ export namespace Job {
     executorHandler: string
     jobDesc: string
     jobGroup: number
-    length?: number // 默认 10
-    start?: number // 默认 0
+    length?: number | 10 // 默认 10
+    start?: number | 0 // 默认 0
     triggerStatus: number
   }
 

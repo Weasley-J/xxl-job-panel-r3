@@ -1,6 +1,6 @@
 import apiClient from '@/api/apiClient.ts'
 import { LoginParams } from '@/types/auth.ts'
-import { ChartInfoParams, ChartInfoResponse, Result, TDashboardTaskStats, User } from '@/types'
+import { ChartInfoParams, ChartInfoResponse, Job, Result, TDashboardTaskStats, User } from '@/types'
 
 /**
  * API Request Entities Management
@@ -17,7 +17,13 @@ export default {
       return apiClient.post<Result>('/user/updatePwd', undefined, { params })
     },
     getUserList(params: User.UserPageQuery) {
-      return apiClient.post<User.UserPageListResponse>('/user/pageList', undefined, { params })
+      return apiClient.get<User.UserPageListResponse>('/user/pageList', undefined, { params })
+    },
+    getUserGroupPermissions() {
+      return apiClient.get<Job.JobGroupInfoPermissions>('/r3/support/v1/user/group/permissions', undefined, {})
+    },
+    deleteUser(params: { id: number }) {
+      return apiClient.post<Result>('/user/remove', undefined, { params }) // 👈 params 会被自动拼到 URL 上
     },
   },
   dashboard: {
