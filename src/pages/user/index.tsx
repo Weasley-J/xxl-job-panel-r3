@@ -64,7 +64,7 @@ export default function UserComponent() {
   tableProps.pagination = {
     ...tableProps.pagination,
     showSizeChanger: true,
-    showQuickJumper: true,
+    showQuickJumper: false,
     showTotal: (total: any) => `共 ${total} 条`,
   }
 

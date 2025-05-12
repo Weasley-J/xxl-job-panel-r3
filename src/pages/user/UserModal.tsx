@@ -113,7 +113,7 @@ export default function UserModal({ parentRef, onRefresh }: IModalProps) {
               { min: 4, max: 20 },
             ]}
           >
-            <Input placeholder="请输入账号" />
+            <Input placeholder="请输入账号" disabled={action === 'edit'} />
           </Form.Item>
 
           <Form.Item
