@@ -6,7 +6,7 @@ import { IAction, IModalProps } from '@/types/modal'
 import { Job, User } from '@/types'
 import api from '@/api'
 import { toast } from '@/utils/toast.ts'
-import { formatPermissionToList, formatPermissionToString } from '@/utils'
+import { formatPermissionToList, formatPermissionToString } from '@/services/userService'
 
 /**
  * 编辑|新增用户
