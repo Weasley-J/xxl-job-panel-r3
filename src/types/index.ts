@@ -150,7 +150,9 @@ export namespace Job {
   export interface StopJobParams {
     id: number
   }
+}
 
+export namespace Trigger {
   export interface TriggerJobParams {
     id: number
     executorParam: string
@@ -192,8 +194,22 @@ export namespace JobGroup {
   export type LoadJobGroupResponse = Result<Item>
 }
 
-// 任务日志
 export namespace JobLog {
+  export interface JobHome {
+    jobId?: number
+  }
+
+  export interface JobGroup {
+    jobGroup?: number
+  }
+
+  export interface JobGroupResponse {
+    jobList?: Job.JobItem[]
+  }
+}
+
+// 任务日志
+export namespace Logger {
   export interface LogItem {
     alarmStatus: number
     executorAddress: string
@@ -210,18 +226,6 @@ export namespace JobLog {
     triggerCode: number
     triggerMsg: string
     triggerTime: string
-  }
-
-  export interface JobHome {
-    jobId?: number
-  }
-
-  export interface JobGroup {
-    jobGroup?: number
-  }
-
-  export interface JobGroupResponse {
-    jobList?: Job.JobItem[]
   }
 
   export interface PageListParams {

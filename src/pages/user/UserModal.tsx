@@ -19,12 +19,6 @@ export default function UserModal({ parentRef, onRefresh }: IModalProps) {
   const [action, setAction] = useState<IAction>('create')
   const [jobGroup, setJobGroup] = useState<Job.JobGroupInfo[]>([])
 
-  const getUserGroupPermissions = async () => {
-    const { content } = await api.user.getUserGroupPermissions()
-    log.info('用户组权限:', content)
-    setJobGroup([...content])
-  }
-
   const openModal = (action: IAction, data?: User.UserRecord) => {
     if (isDebugEnable) log.info('弹窗开启: ', action, data)
     form.resetFields()
@@ -42,6 +36,12 @@ export default function UserModal({ parentRef, onRefresh }: IModalProps) {
   }
 
   useImperativeHandle(parentRef, () => ({ openModal, closeModal: () => setOpen(false) }))
+
+  const getUserGroupPermissions = async () => {
+    const { content } = await api.user.getUserGroupPermissions()
+    log.info('用户组权限:', content)
+    setJobGroup([...content])
+  }
 
   const handleOk = () => {
     const fieldsValue = form.getFieldsValue()

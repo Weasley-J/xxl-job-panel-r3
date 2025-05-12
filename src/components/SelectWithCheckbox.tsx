@@ -19,6 +19,40 @@ export interface ISelectWithCheckboxProps<T extends Record<string, any> = Option
   valueKey?: keyof T
 }
 
+/**
+ * 下拉框+复选框组件
+ * @example
+ * <Form
+ *   layout="horizontal"
+ *   form={form}
+ *   labelCol={{ span: 4 }}
+ *   wrapperCol={{ span: 20 }}
+ *   initialValues={{ role: 0 }}
+ *   className="space-y-5"
+ * >
+ *   <Form.Item name="id" hidden>
+ *     <Input placeholder="用户ID" />
+ *   </Form.Item>
+ *
+ *   <Form.Item name="role" label="角色" rules={[{ required: true }]}>
+ *     <Radio.Group block buttonStyle={'outline'}>
+ *       <Radio.Button value={1}>管理员</Radio.Button>
+ *       <Radio.Button value={0}>普通用户</Radio.Button>
+ *     </Radio.Group>
+ *   </Form.Item>
+ *
+ *   {roleValue === 0 && (
+ *     <Form.Item name="permission" label="权限（多选）" rules={[{ required: true, message: '请选择至少一项' }]}>
+ *       <SelectWithCheckbox<Job.JobGroupInfo>
+ *         placeholder="请选择权限/搜索权限"
+ *         options={jobGroup}
+ *         labelKey="title"
+ *         valueKey="id"
+ *       />
+ *     </Form.Item>
+ *   )}
+ * </Form>
+ */
 export default function SelectWithCheckbox<T extends Record<string, any> = OptionType>({
   value = [],
   onChange,
