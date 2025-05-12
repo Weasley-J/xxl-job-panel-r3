@@ -1,5 +1,5 @@
 import { useImperativeHandle, useState } from 'react'
-import { Checkbox, Col, Form, Input, Radio, Row } from 'antd'
+import { Form, Input, Radio } from 'antd'
 import { ShadcnAntdModal } from '@/components/ShadcnAntdModal'
 import { isDebugEnable, log } from '@/common/Logger'
 import { IAction, IModalProps } from '@/types/modal'
@@ -7,6 +7,7 @@ import { Job, User } from '@/types'
 import api from '@/api'
 import { toast } from '@/utils/toast.ts'
 import { formatPermissionToList, formatPermissionToString } from '@/services/userService'
+import SelectWithCheckbox from '@/components/SelectWithCheckbox.tsx'
 
 /**
  * 编辑|新增用户
@@ -21,7 +22,7 @@ export default function UserModal({ parentRef, onRefresh }: IModalProps) {
   const getUserGroupPermissions = async () => {
     const { content } = await api.user.getUserGroupPermissions()
     log.info('用户组权限:', content)
-    setJobGroup(content)
+    setJobGroup([...content])
   }
 
   const openModal = (action: IAction, data?: User.UserRecord) => {
@@ -31,6 +32,7 @@ export default function UserModal({ parentRef, onRefresh }: IModalProps) {
       data.permission = formatPermissionToList(data?.permission as string)
       form.setFieldsValue(data)
       setUser(data)
+      if (isDebugEnable) log.info('permission :', data.permission)
     } else {
       setUser({} as User.UserRecord)
     }
@@ -42,11 +44,12 @@ export default function UserModal({ parentRef, onRefresh }: IModalProps) {
   useImperativeHandle(parentRef, () => ({ openModal, closeModal: () => setOpen(false) }))
 
   const handleOk = () => {
-    log.info(`${action} 成功`)
+    const fieldsValue = form.getFieldsValue()
+    log.info(`操作: ${action} :`, fieldsValue)
     if (action === 'create') {
-      handleCreate(form.getFieldsValue())
+      handleCreate(fieldsValue)
     } else {
-      handleEdit(form.getFieldsValue())
+      handleEdit(fieldsValue)
     }
     setOpen(false)
     onRefresh()
@@ -57,18 +60,14 @@ export default function UserModal({ parentRef, onRefresh }: IModalProps) {
     setOpen(false)
   }
 
-  const onFinish = () => {
-    setOpen(false)
-  }
-
   async function handleEdit(data: User.UserRecord) {
     if (isDebugEnable) log.info('编辑用户： ', data)
     data.permission = formatPermissionToString(data.permission as number[])
     const { code } = await api.user.editUser(data)
     if (code === 200) {
-      toast.success('success')
+      toast.success('修改成功')
     } else {
-      toast.error('error')
+      toast.error('修改失败')
     }
   }
 
@@ -77,9 +76,9 @@ export default function UserModal({ parentRef, onRefresh }: IModalProps) {
     if (isDebugEnable) log.info('创建用户: ', data)
     const { code } = await api.user.createUser(data)
     if (code === 200) {
-      toast.success('success')
+      toast.success('已创建')
     } else {
-      toast.error('error')
+      toast.error('创建失败')
     }
   }
 
@@ -96,13 +95,14 @@ export default function UserModal({ parentRef, onRefresh }: IModalProps) {
       {() => (
         <Form
           form={form}
-          layout="vertical"
-          onFinish={onFinish}
+          layout="horizontal"
+          labelCol={{ span: 4 }}
+          wrapperCol={{ span: 20 }}
           initialValues={{ role: 0 }}
-          className="space-y-5 max-w-2xl"
+          className="space-y-5"
         >
           <Form.Item name="id" hidden>
-            <Input placeholder="ID" />
+            <Input placeholder="用户ID" />
           </Form.Item>
 
           <Form.Item
@@ -119,38 +119,26 @@ export default function UserModal({ parentRef, onRefresh }: IModalProps) {
           <Form.Item
             name="password"
             label="密码"
-            rules={[
-              ...(action === 'create' ? [{ required: true, message: '请输入密码' }] : []), // 编辑时不强制
-              { min: 5, max: 20 },
-            ]}
+            rules={[...(action === 'create' ? [{ required: true, message: '请输入密码' }] : []), { min: 5, max: 20 }]}
           >
             <Input.Password placeholder={action === 'create' ? '请输入密码' : '如需修改请填写'} />
           </Form.Item>
 
           <Form.Item name="role" label="角色" rules={[{ required: true }]}>
-            <Radio.Group buttonStyle="solid">
+            <Radio.Group block buttonStyle={'outline'}>
               <Radio.Button value={1}>管理员</Radio.Button>
               <Radio.Button value={0}>普通用户</Radio.Button>
             </Radio.Group>
           </Form.Item>
 
           {roleValue === 0 && (
-            <Form.Item name="permission" label="权限">
-              <Checkbox.Group className="w-full">
-                <Row gutter={[12, 12]}>
-                  {jobGroup.map(item => (
-                    <Col span={6} key={item.id}>
-                      <Checkbox value={item.id}>
-                        <div className="break-words">
-                          {item.title}
-                          <br />
-                          <span className="text-xs text-gray-500">{item.appname}</span>
-                        </div>
-                      </Checkbox>
-                    </Col>
-                  ))}
-                </Row>
-              </Checkbox.Group>
+            <Form.Item name="permission" label="权限（多选）" rules={[{ required: true, message: '请选择至少一项' }]}>
+              <SelectWithCheckbox<Job.JobGroupInfo>
+                placeholder="请选择权限/搜索权限"
+                options={jobGroup}
+                labelKey="title"
+                valueKey="id"
+              />
             </Form.Item>
           )}
         </Form>

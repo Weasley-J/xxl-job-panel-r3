@@ -24,7 +24,7 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
 
     try {
       setLoading(true)
-      const { code } = await api.user.login({
+      const { code, msg } = await api.user.login({
         userName,
         password,
         ifRemember: rememberMe,
@@ -38,6 +38,9 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
           const urlSearchParams = new URLSearchParams(window.location.search)
           location.href = urlSearchParams.get('callback') || '/'
         }, 800)
+      } else {
+        toast.error(msg)
+        setLoading(false)
       }
     } catch (e) {
       log.error(e)

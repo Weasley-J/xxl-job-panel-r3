@@ -64,7 +64,7 @@ export default function UserComponent() {
   tableProps.pagination = {
     ...tableProps.pagination,
     showSizeChanger: true,
-    showQuickJumper: false,
+    showQuickJumper: true,
     showTotal: (total: any) => `共 ${total} 条`,
   }
 
@@ -73,9 +73,13 @@ export default function UserComponent() {
     search.submit()
   }, [form, search])
 
-  const handleEdit = useCallback((record: User.UserRecord) => {
-    currentRef.current?.openModal('edit', record)
-  }, [])
+  const handleEdit = useCallback(
+    (record: User.UserRecord) => {
+      currentRef.current?.openModal('edit', record)
+      search.reset()
+    },
+    [search]
+  )
 
   const handleCreate = () => {
     currentRef.current?.openModal('create')
