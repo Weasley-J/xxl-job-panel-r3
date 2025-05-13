@@ -66,6 +66,7 @@ export namespace User {
   }
 }
 
+// 任务
 export namespace Job {
   export interface JobItem {
     addTime: string // 格式如 "2025-05-04 20:49:26"
@@ -104,6 +105,16 @@ export namespace Job {
     registryList?: string[] // 可由 addressList 派生
   }
 
+  export interface PageListParams {
+    author: string | ''
+    executorHandler: string | ''
+    jobDesc: string
+    jobGroup: number
+    start?: number | 0 // 默认 0
+    length?: number | 10 // 默认 10
+    triggerStatus: number
+  }
+
   export interface JobGroupInfoPermissions extends Result {
     content: JobGroupInfo[]
   }
@@ -119,16 +130,6 @@ export namespace Job {
   export interface HomePageResponse {
     JobGroupList: JobGroupInfo[]
     jobGroup: string
-  }
-
-  export interface PageListParams {
-    author: string
-    executorHandler: string
-    jobDesc: string
-    jobGroup: number
-    length?: number | 10 // 默认 10
-    start?: number | 0 // 默认 0
-    triggerStatus: number
   }
 
   export type PageListResponse = PageResult<JobItem>

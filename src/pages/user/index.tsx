@@ -60,7 +60,6 @@ export default function UserComponent() {
     form,
     defaultPageSize: 10,
   })
-
   tableProps.pagination = {
     ...tableProps.pagination,
     showSizeChanger: true,
@@ -113,6 +112,24 @@ export default function UserComponent() {
     confirmDelete(userIds, `将删除 ${userIds.length} 个用户，操作不可恢复。`)
   }
 
+  const searchFields = useMemo<SearchField[]>(
+    () => [
+      { type: 'input', key: 'username', label: '账号', placeholder: '请输入账号搜索' },
+      {
+        type: 'select',
+        key: 'role',
+        label: '角色',
+        placeholder: '请选择角色',
+        options: [
+          { label: '全部', value: -1 },
+          { label: '管理员', value: 1 },
+          { label: '普通用户', value: 0 },
+        ],
+      },
+    ],
+    []
+  )
+
   const columns = useMemo<ColumnsType<User.UserRecord>>(
     () => [
       { title: 'ID', dataIndex: 'id' },
@@ -140,24 +157,6 @@ export default function UserComponent() {
       },
     ],
     [handleEdit, handleUserDelete]
-  )
-
-  const searchFields = useMemo<SearchField[]>(
-    () => [
-      { type: 'input', key: 'username', label: '账号', placeholder: '请输入账号搜索' },
-      {
-        type: 'select',
-        key: 'role',
-        label: '角色',
-        placeholder: '请选择角色',
-        options: [
-          { label: '全部', value: -1 },
-          { label: '管理员', value: 1 },
-          { label: '普通用户', value: 0 },
-        ],
-      },
-    ],
-    []
   )
 
   return (
