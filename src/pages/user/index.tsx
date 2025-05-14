@@ -1,9 +1,8 @@
 import React, { useCallback, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button.tsx'
 import { PlusIcon } from '@radix-ui/react-icons'
-import { DeleteIcon } from 'lucide-react'
+import { DeleteIcon, EditIcon, TrashIcon } from 'lucide-react'
 import { Space, Table } from 'antd'
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import { useAntdTable } from 'ahooks'
 import { useForm } from 'antd/es/form/Form'
 
@@ -127,11 +126,11 @@ export default function UserComponent() {
       render: (record: User.UserRecord) => (
         <Space>
           <Button size="sm" variant="outline" onClick={() => handleEdit(record)}>
-            <EditOutlined />
+            <EditIcon />
             编辑
           </Button>
           <Button size="sm" variant="ghost" onClick={() => handleUserDelete(record.id)}>
-            <DeleteOutlined />
+            <DeleteIcon />
             删除
           </Button>
         </Space>
@@ -159,7 +158,7 @@ export default function UserComponent() {
                 新建用户
               </Button>
               <Button size="sm" onClick={handleBatchDelete}>
-                <DeleteIcon className="mr-1" />
+                <TrashIcon className="mr-1" />
                 批量删除
               </Button>
             </Space>

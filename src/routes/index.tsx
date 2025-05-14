@@ -10,7 +10,7 @@ import { isFalse } from '@/common/booleanUtils'
 import ProtectedRoute from '@/routes/ProtectedRoute.tsx'
 import UserComponent from '@/pages/user'
 import ExecutorComponent from '@/pages/executor'
-import TaskManagerComponent from '@/pages/task'
+import TaskManageComponent from '@/pages/task'
 import LogViewerComponent from '@/pages/logger'
 
 // 所有路径统一管理
@@ -48,7 +48,7 @@ const AppRoutes: React.FC = () => {
         <Route index element={<Dashboard />} />
         <Route path={URIs.dashboard} element={<Dashboard />} />
         <Route path={URIs.overflow} element={<OverflowTest />} />
-        <Route path={URIs.tasks} element={<TaskManagerComponent />} />
+        <Route path={URIs.tasks} element={<TaskManageComponent />} />
         <Route path={URIs.logs} element={<LogViewerComponent />} />
         <Route path={URIs.executors} element={<ExecutorComponent />} />
         <Route path={URIs.users} element={<UserComponent />} />

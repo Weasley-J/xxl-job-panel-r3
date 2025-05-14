@@ -66,7 +66,7 @@ export function SearchBar({ fields, form, initialValues, onSearch, onReset, butt
             return (
               <Select
                 className="w-full"
-                showSearch
+                showSearch={field.options.length > 10}
                 allowClear
                 options={field.options}
                 placeholder={field.placeholder || '请选择'}
@@ -94,7 +94,7 @@ export function SearchBar({ fields, form, initialValues, onSearch, onReset, butt
     const expandToggle = needExpand && (
       <Button variant="ghost" onClick={() => setExpand(!expand)} className="flex items-center">
         {expand ? <UpOutlined /> : <DownOutlined />}
-        <span className="ml-1">{expand ? '收起' : '更多'}</span>
+        <span className="ml-1">{expand ? '收起' : '展开更多'}</span>
       </Button>
     )
 
@@ -140,7 +140,7 @@ export function SearchBar({ fields, form, initialValues, onSearch, onReset, butt
   }
 
   return (
-    <div className="bg-background p-4 rounded-md shadow-sm mt-2">
+    <div className="bg-background p-4 rounded-md shadow-sm mt-1">
       <Form form={form} layout="horizontal" initialValues={initialValues} className="flex flex-col">
         {/* 折叠状态 */}
         {!expand && (

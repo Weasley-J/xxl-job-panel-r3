@@ -11,10 +11,24 @@ import { isDebugEnable, log } from '@/common/Logger.ts'
 import { ColumnsType } from 'antd/es/table'
 import { Space, Table } from 'antd'
 import { Button } from '@/components/ui/button.tsx'
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import { toast } from '@/utils/toast.ts'
+import { Badge } from '@/components/ui/badge.tsx'
+import { PlusIcon } from '@radix-ui/react-icons'
+import { DeleteIcon, EditIcon, TrashIcon } from 'lucide-react'
 
-export default function TaskManagerComponent() {
+// 搜索康框默认值
+const initialValues = {
+  jobGroup: -1,
+  triggerStatus: -1,
+  jobDesc: '',
+  executorHandler: '',
+  author: '',
+}
+
+/**
+ * 任务管理
+ */
+export default function TaskManageComponent() {
   const [form] = useForm<Job.PageListParams>()
   const [ids, setIds] = useState<number[]>([])
   const [action, setAction] = useState<IAction>('create')
@@ -41,7 +55,7 @@ export default function TaskManagerComponent() {
       // 更新状态
       setJobGroupOptions(options)
     } catch (error) {
-      log.error('获取用户组权限失败:', error)
+      if (isDebugEnable) log.error('获取用户组权限失败:', error)
     }
   }
 
@@ -119,19 +133,30 @@ export default function TaskManagerComponent() {
     { title: '负责人', dataIndex: 'author' },
     {
       title: '状态',
-      dataIndex: 'triggerStatus',
-      render: (triggerStatus: number) => (triggerStatus === 1 ? '启用' : '禁用'),
+      render: (record: Job.JobItem) => {
+        const statusMap: Record<number, { className: string; text: string }> = {
+          1: { className: 'bg-green-500', text: 'RUNNING' },
+          0: { className: 'bg-red-500', text: 'STOP' },
+        }
+
+        const { className, text } = statusMap[record.triggerStatus] || {
+          className: 'bg-gray-500',
+          text: '未知',
+        }
+
+        return <Badge className={className}>{text}</Badge>
+      },
     },
     {
       title: '操作',
       render: (record: Job.JobItem) => (
         <Space>
           <Button size="sm" variant="outline" onClick={() => handleEdit(record)}>
-            <EditOutlined />
+            <EditIcon />
             编辑
           </Button>
           <Button size="sm" variant="ghost" onClick={() => handleDelete(record.id)}>
-            <DeleteOutlined />
+            <DeleteIcon />
             删除
           </Button>
         </Space>
@@ -207,18 +232,17 @@ export default function TaskManagerComponent() {
     [confirm]
   )
 
+  const handleBatchDelete = () => {
+    if (ids.length === 0) {
+      toast.warning('请选择需要删除的任务')
+      return
+    }
+    confirmDelete(ids, `将删除 ${ids.length} 个任务，操作不可恢复。`)
+  }
+
   useEffect(() => {
     fetchJobGroupOptions()
   }, [])
-
-  // 使用 number 类型
-  const initialValues = {
-    jobGroup: -1,
-    triggerStatus: -1,
-    jobDesc: '',
-    executorHandler: '',
-    author: '',
-  }
 
   return (
     <div className="content-area">
@@ -228,6 +252,20 @@ export default function TaskManagerComponent() {
         initialValues={initialValues}
         onSearch={search.submit}
         onReset={handleReset}
+        buttons={[
+          {
+            key: 'addJob',
+            label: '新建',
+            icon: <PlusIcon />,
+            onClick: () => currentRef?.current.openModal('create'),
+          },
+          {
+            key: 'batchDelete',
+            label: ' 批量',
+            icon: <TrashIcon />,
+            onClick: handleBatchDelete,
+          },
+        ]}
       />
 
       <div className="mt-4">
