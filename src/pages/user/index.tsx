@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button.tsx'
 import { PlusIcon } from '@radix-ui/react-icons'
 import { DeleteIcon } from 'lucide-react'
@@ -23,6 +23,21 @@ const INIT_VALUES: User.UserPageQuery = {
   role: -1,
 }
 
+const searchFields: SearchField[] = [
+  { type: 'input', key: 'username', label: '账号', placeholder: '请输入账号搜索' },
+  {
+    type: 'select',
+    key: 'role',
+    label: '角色',
+    placeholder: '请选择角色',
+    options: [
+      { label: '全部', value: -1 },
+      { label: '管理员', value: 1 },
+      { label: '普通用户', value: 0 },
+    ],
+  },
+]
+
 /**
  * 用户管理
  */
@@ -38,10 +53,6 @@ export default function UserComponent() {
       setAction(action)
     },
   })
-
-  useEffect(() => {
-    form.setFieldsValue(INIT_VALUES)
-  }, [form])
 
   // 拉取数据
   const fetchTableData = async (
@@ -67,18 +78,9 @@ export default function UserComponent() {
     showTotal: (total: any) => `共 ${total} 条`,
   }
 
-  const handleReset = useCallback(() => {
-    form.setFieldsValue(INIT_VALUES)
-    search.submit()
-  }, [form, search])
-
-  const handleEdit = useCallback(
-    (record: User.UserRecord) => {
-      currentRef.current?.openModal('edit', record)
-      search.reset()
-    },
-    [search]
-  )
+  const handleEdit = (record: User.UserRecord) => {
+    currentRef.current?.openModal('edit', record)
+  }
 
   const handleCreate = () => {
     currentRef.current?.openModal('create')
@@ -93,11 +95,10 @@ export default function UserComponent() {
           await Promise.all(ids.map(id => api.user.deleteUser({ id })))
           toast.success(`${ids.length > 1 ? '批量删除成功' : '删除成功'}`)
           setUserIds([])
-          handleReset()
         },
       })
     },
-    [confirm, handleReset]
+    [confirm]
   )
 
   const handleUserDelete = (id: number) => {
@@ -112,52 +113,31 @@ export default function UserComponent() {
     confirmDelete(userIds, `将删除 ${userIds.length} 个用户，操作不可恢复。`)
   }
 
-  const searchFields = useMemo<SearchField[]>(
-    () => [
-      { type: 'input', key: 'username', label: '账号', placeholder: '请输入账号搜索' },
-      {
-        type: 'select',
-        key: 'role',
-        label: '角色',
-        placeholder: '请选择角色',
-        options: [
-          { label: '全部', value: -1 },
-          { label: '管理员', value: 1 },
-          { label: '普通用户', value: 0 },
-        ],
-      },
-    ],
-    []
-  )
-
-  const columns = useMemo<ColumnsType<User.UserRecord>>(
-    () => [
-      { title: 'ID', dataIndex: 'id' },
-      { title: '账号', dataIndex: 'username' },
-      {
-        title: '角色',
-        dataIndex: 'role',
-        render: (role: number) => (role === 1 ? '管理员' : role === 0 ? '普通用户' : '未知'),
-      },
-      {
-        title: '操作',
-        key: 'operate',
-        render: (record: User.UserRecord) => (
-          <Space>
-            <Button size="sm" variant="outline" onClick={() => handleEdit(record)}>
-              <EditOutlined />
-              编辑
-            </Button>
-            <Button size="sm" variant="ghost" onClick={() => handleUserDelete(record.id)}>
-              <DeleteOutlined />
-              删除
-            </Button>
-          </Space>
-        ),
-      },
-    ],
-    [handleEdit, handleUserDelete]
-  )
+  const columns: ColumnsType<User.UserRecord> = [
+    { title: 'ID', dataIndex: 'id' },
+    { title: '账号', dataIndex: 'username' },
+    {
+      title: '角色',
+      dataIndex: 'role',
+      render: (role: number) => (role === 1 ? '管理员' : role === 0 ? '普通用户' : '未知'),
+    },
+    {
+      title: '操作',
+      key: 'operate',
+      render: (record: User.UserRecord) => (
+        <Space>
+          <Button size="sm" variant="outline" onClick={() => handleEdit(record)}>
+            <EditOutlined />
+            编辑
+          </Button>
+          <Button size="sm" variant="ghost" onClick={() => handleUserDelete(record.id)}>
+            <DeleteOutlined />
+            删除
+          </Button>
+        </Space>
+      ),
+    },
+  ]
 
   return (
     <div className="content-area">
@@ -166,7 +146,7 @@ export default function UserComponent() {
         initialValues={INIT_VALUES}
         fields={searchFields}
         onSearch={search.submit}
-        onReset={handleReset}
+        onReset={form.resetFields}
       />
 
       <div className="content-table">

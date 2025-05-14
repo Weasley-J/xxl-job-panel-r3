@@ -109,10 +109,10 @@ export namespace Job {
     author: string | ''
     executorHandler: string | ''
     jobDesc: string
-    jobGroup: number
+    jobGroup: number | string
     start?: number | 0 // 默认 0
     length?: number | 10 // 默认 10
-    triggerStatus: number
+    triggerStatus: number | string
   }
 
   export interface JobGroupInfoPermissions extends Result {
@@ -133,8 +133,6 @@ export namespace Job {
   }
 
   export type PageListResponse = PageResult<JobItem>
-  export type AddJobParams = JobItem
-  export type UpdateJobParams = JobItem
 
   export interface RemoveJobParams {
     id: number

@@ -27,8 +27,6 @@ export default function UserModal({ parentRef, onRefresh }: IModalProps) {
       form.setFieldsValue(data)
       setUser(data)
       if (isDebugEnable) log.info('permission :', data.permission)
-    } else {
-      setUser({} as User.UserRecord)
     }
     setAction(action)
     setOpen(true)
@@ -74,11 +72,11 @@ export default function UserModal({ parentRef, onRefresh }: IModalProps) {
   async function handleCreate(data: User.UserRecord) {
     data.permission = formatPermissionToString(data.permission as unknown as number[])
     if (isDebugEnable) log.info('创建用户: ', data)
-    const { code } = await api.user.createUser(data)
+    const { code, msg } = await api.user.createUser(data)
     if (code === 200) {
       toast.success('已创建')
     } else {
-      toast.error('创建失败')
+      toast.error('创建失败: ' + msg)
     }
   }
 
