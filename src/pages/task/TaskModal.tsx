@@ -64,12 +64,18 @@ export default function TaskModal({ parentRef, onRefresh }: IModalProps) {
     }
   }
 
+  function handleReset() {
+    setJobInfo({} as Job.JobItem)
+    form.resetFields()
+  }
+
   return (
     <ShadcnAntdModal<Job.JobItem>
       width={900}
       open={open}
       onCancel={handleCancel}
       onOk={handleOk}
+      onReset={handleReset}
       title={action === 'edit' ? '编辑' + title : '新建' + title}
       data={jobInfo}
       destroyOnHidden={true}
@@ -122,7 +128,7 @@ export default function TaskModal({ parentRef, onRefresh }: IModalProps) {
               </Col>
               <Col span={12}>
                 <Form.Item label="Cron" name="scheduleConf" rules={[{ required: true }]}>
-                  <CronEditor onChange={() => log.info('cron')} value={''} />
+                  <CronEditor onChange={() => log.info('cron')} value="" />
                 </Form.Item>
               </Col>
             </Row>
@@ -148,7 +154,7 @@ export default function TaskModal({ parentRef, onRefresh }: IModalProps) {
               </Col>
               <Col span={24}>
                 <Form.Item label="任务参数" name="executorParam" rules={[{ required: true }]}>
-                  <Input placeholder="请输入任务参数" />
+                  <Input.TextArea allowClear placeholder="请输入任务参数" />
                 </Form.Item>
               </Col>
             </Row>

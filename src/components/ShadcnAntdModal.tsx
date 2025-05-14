@@ -38,20 +38,21 @@ export function ShadcnAntdModal<T = any>({
   destroyOnHidden = true,
   children,
 }: ShadModalProps<T>) {
+  const contentPadding = 'px-6 pt-4'
+  const footerPadding = 'px-6 pb-4'
+
   const renderDefaultFooter = () => (
-    <div className="flex justify-end gap-2 px-6 pb-4">
-      {/* 重置按钮 */}
+    <div className={clsx('flex justify-end gap-2', footerPadding)}>
+      {/* 取消按钮 */}
+      <Button size="sm" variant="outline" onClick={onCancel} disabled={loading}>
+        {cancelText}
+      </Button>
+      {/* 重置按钮（可选） */}
       {onReset && (
         <Button size="sm" variant="ghost" onClick={onReset} disabled={loading}>
           {resetText}
         </Button>
       )}
-
-      {/* 取消按钮 */}
-      <Button size="sm" variant="outline" onClick={onCancel} disabled={loading}>
-        {cancelText}
-      </Button>
-
       {/* 确认按钮 */}
       <Button size="sm" onClick={onOk} disabled={loading}>
         {loading ? '处理中...' : okText}
@@ -68,10 +69,10 @@ export function ShadcnAntdModal<T = any>({
       footer={footer !== undefined ? footer : renderDefaultFooter()}
       confirmLoading={false}
       width={width}
-      className={clsx('antd-shadcn-modal', 'rounded-md', 'dark:bg-neutral-900', className)}
+      className={clsx('rounded-md', 'bg-white dark:bg-neutral-900', 'w-full max-w-full', className)}
       destroyOnHidden={destroyOnHidden}
     >
-      <div className="px-6 pt-4">{children?.(data)}</div>
+      <div className={clsx(contentPadding)}>{children?.(data)}</div>
     </Modal>
   )
 }

@@ -146,23 +146,26 @@ export default function UserComponent() {
         fields={searchFields}
         onSearch={search.submit}
         onReset={form.resetFields}
+        buttons={[
+          {
+            key: 'addJob',
+            label: '新建',
+            icon: <PlusIcon />,
+            onClick: handleCreate,
+          },
+          {
+            key: 'batchDelete',
+            label: ' 批量删除',
+            icon: <TrashIcon />,
+            onClick: handleBatchDelete,
+          },
+        ]}
       />
 
       <div className="content-table">
         <div className="content-table-header flex justify-between items-center px-4 py-2">
           <div className="title text-lg font-semibold">用户列表</div>
-          <div className="action-btn">
-            <Space>
-              <Button size="sm" onClick={handleCreate}>
-                <PlusIcon className="mr-1" />
-                新建用户
-              </Button>
-              <Button size="sm" onClick={handleBatchDelete}>
-                <TrashIcon className="mr-1" />
-                批量删除
-              </Button>
-            </Space>
-          </div>
+          <div className="action-btn"></div>
         </div>
 
         <Table<User.UserRecord>
