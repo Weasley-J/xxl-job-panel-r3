@@ -51,22 +51,6 @@ export interface SearchBarProps {
  * @param onSearch 搜索回调函数
  * @param onReset 重置回调函数
  * @param buttons 自定义按钮, 永远处于[搜索]和[重置]按钮的中间
- * @example
- * <SearchBar
- *   form={form}
- *   initialValues={INIT_VALUES}
- *   fields={searchFields}
- *   onSearch={search.submit}
- *   onReset={handleReset}
- *   buttons={[
- *     {
- *       key: 'create',
- *       label: '新建任务',
- *       submit: false,
- *       onClick: () => currentRef?.current.openModal('create'),
- *     },
- *   ]}
- * />
  */
 export function SearchBar({ fields, form, initialValues, onSearch, onReset, buttons = [] }: SearchBarProps) {
   const [expand, setExpand] = useState(false)
@@ -81,10 +65,18 @@ export function SearchBar({ fields, form, initialValues, onSearch, onReset, butt
           case 'select':
             return (
               <Select
-                placeholder={field.placeholder || '请选择'}
                 className="w-full"
+                showSearch
                 allowClear
                 options={field.options}
+                placeholder={field.placeholder || '请选择'}
+                optionFilterProp="label"
+                filterOption={(input, option) => {
+                  const label = option?.label?.toString()?.toLowerCase() || ''
+                  const value = option?.value?.toString()?.toLowerCase() || ''
+                  const keyword = input.toLowerCase()
+                  return label.includes(keyword) || value.includes(keyword)
+                }}
               />
             )
           case 'rangePicker':
@@ -149,7 +141,7 @@ export function SearchBar({ fields, form, initialValues, onSearch, onReset, butt
 
   return (
     <div className="bg-background p-4 rounded-md shadow-sm mt-2">
-      <Form form={form} layout="horizontal" initialValues={initialValues} onFinish={onSearch} className="flex flex-col">
+      <Form form={form} layout="horizontal" initialValues={initialValues} className="flex flex-col">
         {/* 折叠状态 */}
         {!expand && (
           <div className="flex flex-wrap gap-y-3 gap-x-4 items-end">

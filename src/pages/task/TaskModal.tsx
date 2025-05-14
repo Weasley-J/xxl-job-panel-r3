@@ -2,54 +2,65 @@ import { IAction, IModalProps } from '@/types/modal.ts'
 import { Job } from '@/types'
 import { ShadcnAntdModal } from '@/components/ShadcnAntdModal.tsx'
 import { isDebugEnable, log } from '@/common/Logger.ts'
-import { useImperativeHandle, useState } from 'react'
+import { useEffect, useImperativeHandle, useState } from 'react'
 import { Form, Input } from 'antd'
 
 const title = '任务'
 
-/**
- * 编辑|新增任务弹窗
- */
 export default function TaskModal({ parentRef, onRefresh }: IModalProps) {
   const [form] = Form.useForm()
   const [open, setOpen] = useState(false)
   const [action, setAction] = useState<IAction>('create')
-  const [job, setJob] = useState<Job.JobItem>({} as Job.JobItem)
+  const [jobInfo, setJobInfo] = useState<Job.JobItem>({} as Job.JobItem)
+
+  // 暴露方法给父组件
+  useImperativeHandle(parentRef, () => ({
+    openModal,
+    closeModal: () => setOpen(false),
+  }))
 
   const openModal = (action: IAction, data?: Job.JobItem) => {
     if (isDebugEnable) log.info('弹窗开启: ', action, data)
-    form.resetFields()
     setAction(action)
-    if (action === 'edit' && data) {
-      form.setFieldsValue(data)
-      setJob(data)
-    }
+    setJobInfo(data || ({} as Job.JobItem)) // 保存数据用于延迟设值
     setOpen(true)
+    form.resetFields() // 先重置，避免残留
   }
 
-  useImperativeHandle(parentRef, () => ({ openModal, closeModal: () => setOpen(false) }))
+  // 🔄 延迟设置字段，确保 Form 已挂载
+  useEffect(() => {
+    if (open && action === 'edit' && jobInfo?.id) {
+      setTimeout(() => {
+        form.setFieldsValue(jobInfo)
+      }, 5)
+    }
+  }, [open, action, jobInfo, form])
 
-  function handleCancel() {
+  const handleCancel = () => {
     if (isDebugEnable) log.info('取消编辑')
     setOpen(false)
   }
 
-  function handleOk() {
+  const handleOk = () => {
     const fieldsValue = form.getFieldsValue()
     log.info(`操作: ${action} :`, fieldsValue)
+
     if (action === 'create') {
       handleCreate(fieldsValue)
     } else {
       handleEdit(fieldsValue)
     }
+
     setOpen(false)
     onRefresh()
 
-    // @ts-ignore
-    function handleEdit(fieldsValue: any) {}
+    function handleCreate(values: any) {
+      if (isDebugEnable) log.info(`handle-create: ${values} :`, fieldsValue)
+    }
 
-    // @ts-ignore
-    function handleCreate(fieldsValue: any) {}
+    function handleEdit(values: any) {
+      if (isDebugEnable) log.info(`handle-edit: ${values} :`, fieldsValue)
+    }
   }
 
   return (
@@ -58,7 +69,8 @@ export default function TaskModal({ parentRef, onRefresh }: IModalProps) {
       onCancel={handleCancel}
       onOk={handleOk}
       title={action === 'edit' ? '编辑' + title : '新建' + title}
-      data={job}
+      data={jobInfo}
+      destroyOnHidden={true} // 注意：保留 destroy，会配合 useEffect 延迟设置字段
     >
       {() => (
         <Form

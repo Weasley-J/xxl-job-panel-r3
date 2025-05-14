@@ -109,10 +109,10 @@ export namespace Job {
     author: string | ''
     executorHandler: string | ''
     jobDesc: string
-    jobGroup: number | string
+    jobGroup: number
     start?: number | 0 // 默认 0
     length?: number | 10 // 默认 10
-    triggerStatus: number | string
+    triggerStatus: number
   }
 
   export interface JobGroupInfoPermissions extends Result {
