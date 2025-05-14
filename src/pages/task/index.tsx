@@ -10,11 +10,23 @@ import { useConfirmDialog } from '@/hooks/useConfirmDialog.tsx'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import { ColumnsType } from 'antd/es/table'
 import { Space, Table } from 'antd'
-import { Button } from '@/components/ui/button.tsx'
 import { toast } from '@/utils/toast.ts'
 import { Badge } from '@/components/ui/badge.tsx'
-import { PlusIcon } from '@radix-ui/react-icons'
-import { DeleteIcon, EditIcon, TrashIcon } from 'lucide-react'
+import {
+  ClipboardCopyIcon,
+  ClockIcon,
+  EyeOpenIcon,
+  GearIcon,
+  PlusIcon,
+  ResumeIcon,
+  RocketIcon,
+  StopIcon,
+  TrashIcon,
+} from '@radix-ui/react-icons'
+import { DeleteIcon, EditIcon, MoreHorizontal } from 'lucide-react'
+import { IconTooltipButton } from '@/components/IconTooltipButton.tsx'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { Button } from '@/components/ui/button'
 
 // 搜索康框默认值
 const initialValues = {
@@ -59,7 +71,7 @@ export default function TaskManageComponent() {
     }
   }
 
-  const currentRef = useRef<ModalAction>({
+  const modalRef = useRef<ModalAction>({
     openModal: (action, data) => {
       if (isDebugEnable) log.info(`打开弹窗: ${action}, ${data}`)
       setAction(action)
@@ -104,8 +116,39 @@ export default function TaskManageComponent() {
     },
   ]
 
+  function onStop(id: number) {
+    if (isDebugEnable) log.info('onStop:', id)
+  }
+
+  function onStart(id: number) {
+    if (isDebugEnable) log.info('onStart:', id)
+  }
+
+  function handleRunOnce(id: number) {
+    if (isDebugEnable) log.info('执行一次: ', id)
+  }
+
+  function handleViewLog(id: number) {
+    if (isDebugEnable) log.info('查看日志: ', id)
+  }
+
+  function handleRegisterNode(id: number) {
+    if (isDebugEnable) log.info('注册节点: ', id)
+  }
+
+  function handleClone(record: Job.JobItem) {
+    if (isDebugEnable) log.info('复制数据:', record)
+    const cloned = { ...record, id: undefined, jobDesc: `${record.jobDesc} - 副本` }
+    modalRef?.current.openModal('create', cloned)
+  }
+
+  const handleNextTriggerTime = (record: Job.JobItem) => {
+    if (isDebugEnable) log.info('handleNextTriggerTime:', record)
+    return undefined
+  }
+
   const columns: ColumnsType<Job.JobItem> = [
-    { title: '任务ID', dataIndex: 'id' },
+    { title: '任务ID', dataIndex: 'id', fixed: 'left' },
     { title: '任务描述', dataIndex: 'jobDesc' },
     {
       title: '调度类型',
@@ -151,18 +194,72 @@ export default function TaskManageComponent() {
       title: '操作',
       render: (record: Job.JobItem) => (
         <Space>
-          <Button size="sm" variant="outline" onClick={() => handleEdit(record)}>
-            <EditIcon />
-            编辑
-          </Button>
-          <Button size="sm" variant="ghost" onClick={() => handleDelete(record.id)}>
-            <DeleteIcon />
-            删除
-          </Button>
+          {/* 启停按钮 */}
+          <IconTooltipButton
+            onClick={() => (record.triggerStatus === 1 ? onStop(record.id) : onStart(record.id))}
+            tooltip={record.triggerStatus === 1 ? '停止任务' : '启动任务'}
+            icon={record.triggerStatus === 1 ? <StopIcon /> : <ResumeIcon />}
+          />
+          {/* 执行一次 */}
+          <IconTooltipButton tooltip="执行一次" icon={<RocketIcon />} onClick={() => handleRunOnce(record.id)} />
+          {/* 编辑按钮 */}
+          <IconTooltipButton onClick={() => handleEdit(record)} tooltip="编辑任务" icon={<EditIcon />} />
+          {/* 更多操作 */}
+          <MoreActionsMenu record={record} />
         </Space>
       ),
     },
   ]
+
+  /**
+   * 更多操作
+   */
+  function MoreActionsMenu({ record }: { record: Job.JobItem }) {
+    const [open, setOpen] = useState(false)
+    const [nextTriggerTime, setNextTriggerTime] = useState<string | undefined>('N/A')
+
+    const handleToggleMenu = (newOpen: boolean) => {
+      setOpen(newOpen)
+
+      if (newOpen) {
+        // 只有在打开菜单时才调用
+        const result = handleNextTriggerTime(record)
+        setNextTriggerTime(result ?? 'N/A')
+      }
+    }
+
+    return (
+      <DropdownMenu open={open} onOpenChange={handleToggleMenu}>
+        <DropdownMenuTrigger asChild>
+          <Button size="sm" variant="ghost">
+            <MoreHorizontal className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent side="bottom" align="end">
+          <DropdownMenuItem onClick={() => handleViewLog(record.id)}>
+            <EyeOpenIcon className="mr-2 h-4 w-4" />
+            查询日志
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleRegisterNode(record.id)}>
+            <GearIcon className="mr-2 h-4 w-4" />
+            注册节点
+          </DropdownMenuItem>
+          <DropdownMenuItem disabled>
+            <ClockIcon className="mr-2 h-4 w-4 text-muted-foreground" />
+            下次执行时间：{nextTriggerTime}
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleClone(record)}>
+            <ClipboardCopyIcon className="mr-2 h-4 w-4" />
+            复制为新任务
+          </DropdownMenuItem>
+          <DropdownMenuItem className="text-red-600 focus:text-red-600" onClick={() => handleDelete(record.id)}>
+            <DeleteIcon className="mr-2 h-4 w-4" />
+            删除任务
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    )
+  }
 
   const fetchData = async (
     { current, pageSize }: { current: number; pageSize: number },
@@ -209,7 +306,7 @@ export default function TaskManageComponent() {
   }
 
   function handleEdit(record: Job.JobItem) {
-    currentRef?.current.openModal('edit', record)
+    modalRef?.current.openModal('edit', record)
   }
 
   function handleDelete(id: number) {
@@ -257,7 +354,7 @@ export default function TaskManageComponent() {
             key: 'addJob',
             label: '新建',
             icon: <PlusIcon />,
-            onClick: () => currentRef?.current.openModal('create'),
+            onClick: () => modalRef?.current.openModal('create'),
           },
           {
             key: 'batchDelete',
@@ -271,6 +368,7 @@ export default function TaskManageComponent() {
       <div className="mt-4">
         <Table<Job.JobItem>
           bordered
+          scroll={{ x: 'max-content' }}
           columns={columns}
           rowKey={record => record.id}
           rowSelection={{
@@ -285,7 +383,7 @@ export default function TaskManageComponent() {
         />
       </div>
 
-      <TaskModal parentRef={currentRef} onRefresh={() => (action === 'create' ? search.reset() : search.submit())} />
+      <TaskModal parentRef={modalRef} onRefresh={() => (action === 'create' ? search.reset() : search.submit())} />
 
       {dialog}
     </div>

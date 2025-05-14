@@ -1,19 +1,22 @@
 import { ScheduleOutlined } from '@ant-design/icons'
 import { Dropdown, Input } from 'antd'
-import { log } from '@/common/Logger.ts'
+import { isDebugEnable, log } from '@/common/Logger.ts'
 import Cron from '@/components/cron'
 
+/**
+ * Cron 编辑组件
+ */
 export default function CronEditor(props: { value: string; onChange: (newValue: string) => void }) {
   const { value, onChange } = props
 
   return (
     <Dropdown
       trigger={['click']}
-      dropdownRender={() => (
+      popupRender={() => (
         <Cron
           value={value}
           onOk={(newValue: string) => {
-            log.info('用户选择的新 Cron 值：', newValue)
+            if (isDebugEnable) log.info('用户选择的新 Cron 值：', newValue)
             onChange(newValue)
           }}
         />

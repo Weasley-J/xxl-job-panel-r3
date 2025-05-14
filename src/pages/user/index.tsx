@@ -46,7 +46,7 @@ export default function UserComponent() {
   const [action, setAction] = useState<IAction>('create')
   const { confirm, dialog } = useConfirmDialog()
 
-  const currentRef = useRef<ModalAction>({
+  const modalRef = useRef<ModalAction>({
     openModal: (action, data) => {
       if (isDebugEnable) log.info('打开弹窗:', action, data)
       setAction(action)
@@ -78,11 +78,11 @@ export default function UserComponent() {
   }
 
   const handleEdit = (record: User.UserRecord) => {
-    currentRef.current?.openModal('edit', record)
+    modalRef.current?.openModal('edit', record)
   }
 
   const handleCreate = () => {
-    currentRef.current?.openModal('create')
+    modalRef.current?.openModal('create')
   }
 
   const confirmDelete = useCallback(
@@ -181,7 +181,7 @@ export default function UserComponent() {
         />
       </div>
 
-      <UserModal parentRef={currentRef} onRefresh={() => (action === 'create' ? search.reset() : search.submit())} />
+      <UserModal parentRef={modalRef} onRefresh={() => (action === 'create' ? search.reset() : search.submit())} />
 
       {dialog}
     </div>

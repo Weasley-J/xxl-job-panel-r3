@@ -124,10 +124,10 @@ function Cron(props: ICronProps) {
     }
     return (
       <Space>
-        <Button type={'default'} onClick={onReset}>
+        <Button size={'small'} type={'default'} onClick={onReset}>
           重置
         </Button>
-        <Button type={'primary'} onClick={onGenerate}>
+        <Button size={'small'} type={'primary'} onClick={onGenerate}>
           生成
         </Button>
       </Space>
