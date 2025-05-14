@@ -120,9 +120,9 @@ export default function SelectWithCheckbox<T extends Record<string, any> = Optio
             </Checkbox>
             已选择 {value.length} 项 / 共 {options.length} 项
           </div>
-          <Button size="sm" style={{ marginRight: 4 }} onClick={handleClearAll}>
+          <Button size="sm" variant="outline" style={{ marginRight: 4 }} onClick={handleClearAll}>
             <ResetIcon />
-            删除
+            清空选择
           </Button>
         </div>
 
