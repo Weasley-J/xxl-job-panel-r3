@@ -14,6 +14,7 @@ interface ShadModalProps<T = any> {
   cancelText?: string
   okText?: string
   width?: number | string
+  centered?: boolean
   loading?: boolean
   footer?: React.ReactNode | null
   className?: string
@@ -32,6 +33,7 @@ export function ShadcnAntdModal<T = any>({
   cancelText = '取消',
   okText = '确认',
   width = 720,
+  centered = false,
   loading = false,
   footer,
   className,
@@ -63,6 +65,7 @@ export function ShadcnAntdModal<T = any>({
   return (
     <Modal
       open={open}
+      centered={centered}
       title={<div className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">{title}</div>}
       onCancel={onCancel}
       onOk={onOk}
