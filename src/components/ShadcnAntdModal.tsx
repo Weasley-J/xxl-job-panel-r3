@@ -72,7 +72,7 @@ export function ShadcnAntdModal<T = any>({
       footer={footer !== undefined ? footer : renderDefaultFooter()}
       confirmLoading={false}
       width={width}
-      className={clsx('rounded-md', 'bg-white dark:bg-neutral-900', 'w-full max-w-full', className)}
+      className={clsx('rounded-md', 'w-full max-w-full', className)}
       destroyOnHidden={destroyOnHidden}
     >
       <div className={clsx(contentPadding)}>{children?.(data)}</div>

@@ -103,7 +103,7 @@ export default function TaskModal({ parentRef, onRefresh }: IModalProps) {
 
   return (
     <ShadcnAntdModal<Job.JobItem>
-      width={850}
+      width={920}
       open={open}
       onCancel={handleCancel}
       onOk={handleOk}
@@ -218,7 +218,7 @@ export default function TaskModal({ parentRef, onRefresh }: IModalProps) {
                   <Form.Item label="脚本内容" name="glueSource" rules={[{ required: true, message: '请输入脚本内容' }]}>
                     <div className="border rounded-md overflow-hidden dark:border-zinc-800">
                       <Editor
-                        height="240px"
+                        height="200px"
                         language={glueLangMap[glueType] || 'text'}
                         value={editorCode}
                         onChange={val => {
