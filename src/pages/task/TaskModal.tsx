@@ -20,6 +20,13 @@ export default function TaskModal({ parentRef, onRefresh }: IModalProps) {
   const [editorCode, setEditorCode] = useState('')
   const { isDarkEnable } = useZustandStore()
   const monacoTheme = isDarkEnable ? 'vs-dark' : 'vs'
+  const glueType = Form.useWatch('glueType', form) as GlueTypeEnum
+  const showJobHandler = glueType === GlueTypeEnum.BEAN
+  const scheduleType = Form.useWatch('scheduleType', form) as ScheduleTypeEnum
+  const glueTypeOptions = Object.entries(GlueTypeConfig).map(([value, config]) => ({
+    label: config.desc, // GLUE(Python)
+    value: value as GlueTypeEnum,
+  }))
 
   // 暴露方法给父组件
   useImperativeHandle(parentRef, () => ({
@@ -77,14 +84,6 @@ export default function TaskModal({ parentRef, onRefresh }: IModalProps) {
   }
 
   // 动态渲染
-  const glueType = Form.useWatch('glueType', form) as GlueTypeEnum
-  const showJobHandler = glueType === GlueTypeEnum.BEAN
-  const scheduleType = Form.useWatch('scheduleType', form) as ScheduleTypeEnum
-  const glueTypeOptions = Object.entries(GlueTypeConfig).map(([value, config]) => ({
-    label: config.desc, // GLUE(Python)
-    value: value as GlueTypeEnum,
-  }))
-
   useEffect(() => {
     if (!showJobHandler) {
       form.setFieldValue('executorHandler', '') // 清空值
