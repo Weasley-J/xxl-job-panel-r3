@@ -7,7 +7,7 @@ interface ShadModalProps<T = any> {
   open: boolean
   title?: React.ReactNode
   data?: T
-  onReset?: () => void
+  onReset?: () => void | undefined
   onCancel: () => void
   onOk?: () => void
   resetText?: string

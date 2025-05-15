@@ -92,8 +92,8 @@ export default function TaskManageComponent() {
       label: '任务状态',
       options: [
         { label: '全部', value: -1 },
-        { label: '启用', value: 1 },
-        { label: '禁用', value: 0 },
+        { label: '运行中', value: 1 },
+        { label: '已停止', value: 0 },
       ],
     },
     {
@@ -154,8 +154,12 @@ export default function TaskManageComponent() {
       title: '调度类型',
       render: (record: Job.JobItem) => {
         switch (record.scheduleType) {
+          case 'NONE':
+            return '无'
           case 'CRON':
             return `CRON: ${record.scheduleConf}`
+          case 'FIX_RATE':
+            return record.scheduleConf
           default:
             return '未知'
         }
@@ -178,15 +182,13 @@ export default function TaskManageComponent() {
       title: '状态',
       render: (record: Job.JobItem) => {
         const statusMap: Record<number, { className: string; text: string }> = {
-          1: { className: 'bg-green-500', text: 'RUNNING' },
-          0: { className: 'bg-red-500', text: 'STOP' },
+          1: { className: 'bg-green-200 text-green-700', text: '运行中' }, // RUNNING
+          0: { className: 'bg-red-200 text-red-700', text: '已停止' }, // STOP
         }
-
         const { className, text } = statusMap[record.triggerStatus] || {
-          className: 'bg-gray-500',
+          className: 'bg-gray-200 text-gray-700',
           text: '未知',
         }
-
         return <Badge className={className}>{text}</Badge>
       },
     },

@@ -157,7 +157,7 @@ function Cron(props: ICronProps) {
           centered
           tabPosition={'top'}
           type="line"
-          destroyInactiveTabPane
+          destroyOnHidden
           activeKey={currentTab}
           onChange={setCurrentTab}
           items={[
