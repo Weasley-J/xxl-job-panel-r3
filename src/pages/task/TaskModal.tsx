@@ -103,7 +103,7 @@ export default function TaskModal({ parentRef, onRefresh }: IModalProps) {
 
   return (
     <ShadcnAntdModal<Job.JobItem>
-      width={920}
+      width={900}
       open={open}
       onCancel={handleCancel}
       onOk={handleOk}

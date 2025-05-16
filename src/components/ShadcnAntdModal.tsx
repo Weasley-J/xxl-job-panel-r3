@@ -2,6 +2,7 @@ import { Modal } from 'antd'
 import { Button } from '@/components/ui/button'
 import React from 'react'
 import clsx from 'clsx'
+import { ModalStyles } from 'rc-dialog/lib/IDialogPropTypes'
 
 interface ShadModalProps<T = any> {
   open: boolean
@@ -18,6 +19,7 @@ interface ShadModalProps<T = any> {
   loading?: boolean
   footer?: React.ReactNode | null
   className?: string
+  styles?: ModalStyles
   destroyOnHidden?: boolean // 注意：保留 destroy，会配合 useEffect 延迟设置字段
   children: (data?: T) => React.ReactNode
 }
@@ -37,6 +39,7 @@ export function ShadcnAntdModal<T = any>({
   loading = false,
   footer,
   className,
+  styles,
   destroyOnHidden = true,
   children,
 }: ShadModalProps<T>) {
@@ -73,6 +76,7 @@ export function ShadcnAntdModal<T = any>({
       confirmLoading={false}
       width={width}
       className={clsx('rounded-md', 'w-full max-w-full', className)}
+      styles={styles}
       destroyOnHidden={destroyOnHidden}
     >
       <div className={clsx(contentPadding)}>{children?.(data)}</div>

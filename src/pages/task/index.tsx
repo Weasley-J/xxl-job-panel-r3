@@ -3,7 +3,6 @@ import { useForm } from 'antd/es/form/Form'
 import { useAntdTable } from 'ahooks'
 import { SearchBar, SearchField } from '@/components/common/SearchBar.tsx'
 import api from '@/api'
-import TaskModal from '@/pages/task/TaskModal.tsx'
 import { IAction, ModalAction } from '@/types/modal.ts'
 import { Job } from '@/types'
 import { useConfirmDialog } from '@/hooks/useConfirmDialog.tsx'
@@ -27,6 +26,7 @@ import { DeleteIcon, EditIcon, MoreHorizontal } from 'lucide-react'
 import { IconTooltipButton } from '@/components/IconTooltipButton.tsx'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
+import TaskModalPrimary from '@/pages/task/TaskModalPrimary.tsx'
 
 // 搜索康框默认值
 const initialValues = {
@@ -385,7 +385,11 @@ export default function TaskManageComponent() {
         />
       </div>
 
-      <TaskModal parentRef={modalRef} onRefresh={() => (action === 'create' ? search.reset() : search.submit())} />
+      {/*<TaskModal parentRef={modalRef} onRefresh={() => (action === 'create' ? search.reset() : search.submit())} />*/}
+      <TaskModalPrimary
+        parentRef={modalRef}
+        onRefresh={() => (action === 'create' ? search.reset() : search.submit())}
+      />
 
       {dialog}
     </div>
