@@ -3,7 +3,7 @@ import IntervalInput from './IntervalInput.tsx'
 import FromToInput from './FromToInput.tsx'
 import SpecifiedInput from './SpecifiedInput.tsx'
 
-const radioStyle = { display: 'block', lineHeight: '32px' }
+const radioStyle = { display: 'block', lineHeight: '20px' }
 
 function MinutePane(props: any) {
   const { value, onChange } = props
@@ -35,7 +35,7 @@ function MinutePane(props: any) {
       <Radio style={radioStyle} value={2}>
         <IntervalInput disabled={currentRadio !== 2} value={value} onChange={onChange} />
       </Radio>
-      <Radio style={radioStyle} value={3}>
+      <Radio style={{ marginTop: '5px', ...radioStyle }} value={3}>
         <SpecifiedInput disabled={currentRadio !== 3} value={value} onChange={onChange} />
       </Radio>
     </Radio.Group>

@@ -92,13 +92,13 @@ const TaskModalPrimary = ({ parentRef, onRefresh }: IModalProps) => {
   return (
     <ShadcnAntdModal<Job.JobItem>
       open={open}
-      centered
       onOk={handleOk}
       onCancel={handleCancel}
       onReset={action === 'create' ? () => handleReset() : undefined}
       width={900}
       data={jobInfo}
-      styles={{ body: { maxHeight: '70vh', minHeight: 460, overflowY: 'auto' } }}
+      style={{ top: 30 }}
+      styles={{ body: { maxHeight: '70vh', minHeight: 400, overflowY: 'auto' } }}
       destroyOnHidden={true}
       title={
         <Space style={{ width: '100%', justifyContent: 'space-between' }}>

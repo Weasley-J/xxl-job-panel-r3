@@ -84,6 +84,7 @@ export default function UserModal({ parentRef, onRefresh }: IModalProps) {
 
   return (
     <ShadcnAntdModal<User.UserRecord>
+      centered
       open={open}
       onCancel={handleCancel}
       onOk={handleOk}

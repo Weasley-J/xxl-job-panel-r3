@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { Checkbox, Col, Row } from 'antd'
 
 function SpecifiedInput(props: any) {
@@ -24,13 +24,13 @@ function SpecifiedInput(props: any) {
   }, [disabled])
 
   return (
-    <React.Fragment>
+    <>
       指定秒
       <br />
       <Checkbox.Group style={{ width: '100%' }} value={selected} onChange={onChangeSelected}>
         <Row>{checkList}</Row>
       </Checkbox.Group>
-    </React.Fragment>
+    </>
   )
 }
 

@@ -123,11 +123,11 @@ function Cron(props: ICronProps) {
       return footerRenderer(onReset, onGenerate) // 自定义的页脚渲染
     }
     return (
-      <Space>
-        <Button size={'small'} type={'default'} onClick={onReset}>
+      <Space style={{ marginTop: 5 }}>
+        <Button size={'small'} type="text" onClick={onReset}>
           重置
         </Button>
-        <Button size={'small'} type={'primary'} onClick={onGenerate}>
+        <Button size={'small'} type="default" onClick={onGenerate}>
           生成
         </Button>
       </Space>
@@ -140,10 +140,11 @@ function Cron(props: ICronProps) {
 
   return (
     <Card
+      size={'small'}
       style={{
         display: 'flex',
         flexDirection: 'column',
-        borderRadius: '10px',
+        borderRadius: '8px',
         outline: 'none',
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
         width: 600,
@@ -155,7 +156,7 @@ function Cron(props: ICronProps) {
       <div style={{ flex: 1, overflow: 'auto', minHeight: 0 }}>
         <Tabs
           centered
-          tabPosition={'top'}
+          size="small"
           type="line"
           destroyOnHidden
           activeKey={currentTab}
@@ -214,7 +215,7 @@ function Cron(props: ICronProps) {
           alignItems: 'center',
           justifyContent: 'space-between',
           borderTop: '0.8px solid #e8e8e8',
-          padding: 10,
+          padding: 0,
           margin: 0,
           ...footerStyle,
         }}

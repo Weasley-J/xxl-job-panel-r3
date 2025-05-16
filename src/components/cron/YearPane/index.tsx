@@ -7,7 +7,7 @@ import FromToInput from './FromToInput.tsx'
 import SpecifiedInput from './SpecifiedInput.tsx'
 import IntervalInput from './IntervalInput.tsx'
 
-const radioStyle = { display: 'block', lineHeight: '32px' }
+const radioStyle = { display: 'block', lineHeight: '20px' }
 
 function YearPane(props: { value: string; onChange: (val: string) => void }) {
   const { value, onChange } = props
@@ -47,7 +47,7 @@ function YearPane(props: { value: string; onChange: (val: string) => void }) {
       <Radio style={radioStyle} value={3}>
         <IntervalInput disabled={currentRadio !== 3} value={value} onChange={onChange} />
       </Radio>
-      <Radio style={radioStyle} value={4}>
+      <Radio style={{ marginTop: '5px', ...radioStyle }} value={4}>
         <SpecifiedInput disabled={currentRadio !== 4} value={value} onChange={onChange} />
       </Radio>
     </Radio.Group>

@@ -31,12 +31,14 @@ function WeekPane(props: any) {
 
   return (
     <Radio.Group style={{ width: '100%' }} value={currentRadio} onChange={onChangeRadio}>
-      <Radio style={radioStyle} value={0}>
-        每一周
-      </Radio>
-      <Radio style={radioStyle} value={1}>
-        不指定
-      </Radio>
+      <div style={{ display: 'flex', gap: '24px' }}>
+        <Radio style={radioStyle} value={0}>
+          每一周
+        </Radio>
+        <Radio style={radioStyle} value={1}>
+          不指定周
+        </Radio>
+      </div>
       <Radio style={radioStyle} value={2}>
         <FromToInput disabled={currentRadio !== 2} value={value} onChange={onChange} />
       </Radio>
