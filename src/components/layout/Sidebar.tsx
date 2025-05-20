@@ -29,7 +29,7 @@ export function Sidebar({ ...props }: React.ComponentProps<typeof ShadUISidebar>
   const user = {
     name: username,
     email: username + '@example.com',
-    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+    avatar: 'https://weasley.oss-cn-shanghai.aliyuncs.com/Photos/Hanfu_2.png',
   }
 
   return (

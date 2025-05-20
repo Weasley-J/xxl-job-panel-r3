@@ -13,7 +13,6 @@ import ExecutorComponent from '@/pages/executor'
 import TaskManageComponent from '@/pages/task'
 import LogViewerComponent from '@/pages/logger'
 
-// 所有路径统一管理
 const URIs = {
   home: '/',
   login: '/login',
@@ -27,7 +26,6 @@ const URIs = {
   noPermission: '/403',
 }
 
-// 路由配置
 const AppRoutes: React.FC = () => {
   return (
     <Routes>
@@ -47,11 +45,11 @@ const AppRoutes: React.FC = () => {
       >
         <Route index element={<Dashboard />} />
         <Route path={URIs.dashboard} element={<Dashboard />} />
-        <Route path={URIs.overflow} element={<OverflowTest />} />
         <Route path={URIs.tasks} element={<TaskManageComponent />} />
         <Route path={URIs.logs} element={<LogViewerComponent />} />
         <Route path={URIs.executors} element={<ExecutorComponent />} />
         <Route path={URIs.users} element={<UserComponent />} />
+        <Route path={URIs.overflow} element={<OverflowTest />} />
       </Route>
 
       <Route path="*" element={<NotFound />} />
@@ -59,5 +57,4 @@ const AppRoutes: React.FC = () => {
   )
 }
 
-// 导出组件与路径配置
 export { URIs, AppRoutes }

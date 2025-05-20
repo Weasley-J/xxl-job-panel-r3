@@ -10,7 +10,7 @@ import React, {
 import { Spin } from 'antd'
 
 interface LazyProps {
-  Component: LazyExoticComponent<React.FC> | React.FC
+  Render: LazyExoticComponent<React.ComponentType<any>> | React.ComponentType<any>
 }
 
 const lazyContainer: CSSProperties = {
@@ -38,9 +38,9 @@ const lazyContent: CSSProperties = {
  * 延迟加载 HOC 组件
  * @author weasley
  * @example
- * <Lazy Component={Dashboard} />
+ * <Lazy Render={Dashboard} />
  */
-const Lazy: React.FC<LazyProps> = ({ Component }) => {
+const Lazy: React.FC<LazyProps> = ({ Render }) => {
   const [bgColor, setBgColor] = useState<string | null>(null)
   const fallbackRef = useRef<HTMLDivElement | null>(null)
   const [isTransitioning, setIsTransitioning] = useState(true)
@@ -54,7 +54,7 @@ const Lazy: React.FC<LazyProps> = ({ Component }) => {
   )
 
   useEffect(() => {
-    if (fallbackRef.current) {
+    if (fallbackRef.current?.parentElement) {
       const parentBgColor = window.getComputedStyle(fallbackRef.current.parentElement!).backgroundColor
       if (parentBgColor !== bgColor) {
         setBgColor(parentBgColor)
@@ -72,7 +72,7 @@ const Lazy: React.FC<LazyProps> = ({ Component }) => {
 
   return (
     <Suspense fallback={fallback}>
-      <Component />
+      <Render />
     </Suspense>
   )
 }
